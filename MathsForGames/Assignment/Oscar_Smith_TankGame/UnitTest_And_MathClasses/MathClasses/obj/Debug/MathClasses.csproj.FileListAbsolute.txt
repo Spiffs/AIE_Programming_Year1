@@ -1,0 +1,6 @@
+C:\Users\s192134\Desktop\ProgrammingYear1\MathsForGames\Assignment\Oscar_Smith_TankGame\UnitTest_And_MathClasses\MathClasses\obj\Debug\MathClasses.csprojAssemblyReference.cache
+C:\Users\s192134\Desktop\Programming_Year1\MathsForGames\Assignment\Oscar_Smith_TankGame\UnitTest_And_MathClasses\MathClasses\bin\Debug\MathClasses.exe.config
+C:\Users\s192134\Desktop\Programming_Year1\MathsForGames\Assignment\Oscar_Smith_TankGame\UnitTest_And_MathClasses\MathClasses\bin\Debug\MathClasses.exe
+C:\Users\s192134\Desktop\Programming_Year1\MathsForGames\Assignment\Oscar_Smith_TankGame\UnitTest_And_MathClasses\MathClasses\bin\Debug\MathClasses.pdb
+C:\Users\s192134\Desktop\Programming_Year1\MathsForGames\Assignment\Oscar_Smith_TankGame\UnitTest_And_MathClasses\MathClasses\obj\Debug\MathClasses.exe
+C:\Users\s192134\Desktop\Programming_Year1\MathsForGames\Assignment\Oscar_Smith_TankGame\UnitTest_And_MathClasses\MathClasses\obj\Debug\MathClasses.pdb

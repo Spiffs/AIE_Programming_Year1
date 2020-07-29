@@ -1,0 +1,11 @@
+C:\Users\s192134\Desktop\ProgrammingYear1\MathsForGames\Assignment\Oscar_Smith_TankGame\TankGame\obj\Debug\TankGame.csprojAssemblyReference.cache
+C:\Users\s192134\Desktop\Programming_Year1\MathsForGames\Assignment\Oscar_Smith_TankGame\TankGame\obj\Debug\TankGame.csprojAssemblyReference.cache
+C:\Users\s192134\Desktop\Programming_Year1\MathsForGames\Assignment\Oscar_Smith_TankGame\TankGame\bin\Debug\TankGame.exe.config
+C:\Users\s192134\Desktop\Programming_Year1\MathsForGames\Assignment\Oscar_Smith_TankGame\TankGame\bin\Debug\TankGame.exe
+C:\Users\s192134\Desktop\Programming_Year1\MathsForGames\Assignment\Oscar_Smith_TankGame\TankGame\bin\Debug\TankGame.pdb
+C:\Users\s192134\Desktop\Programming_Year1\MathsForGames\Assignment\Oscar_Smith_TankGame\TankGame\bin\Debug\MathClasses.exe
+C:\Users\s192134\Desktop\Programming_Year1\MathsForGames\Assignment\Oscar_Smith_TankGame\TankGame\bin\Debug\MathClasses.pdb
+C:\Users\s192134\Desktop\Programming_Year1\MathsForGames\Assignment\Oscar_Smith_TankGame\TankGame\bin\Debug\MathClasses.exe.config
+C:\Users\s192134\Desktop\Programming_Year1\MathsForGames\Assignment\Oscar_Smith_TankGame\TankGame\obj\Debug\TankGame.csproj.CopyComplete
+C:\Users\s192134\Desktop\Programming_Year1\MathsForGames\Assignment\Oscar_Smith_TankGame\TankGame\obj\Debug\TankGame.exe
+C:\Users\s192134\Desktop\Programming_Year1\MathsForGames\Assignment\Oscar_Smith_TankGame\TankGame\obj\Debug\TankGame.pdb
