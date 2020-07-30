@@ -170,6 +170,8 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Graph.cpp" />
+    <ClCompile Include="Graph2D.cpp" />
     <ClCompile Include="KeyboardBehavior.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -179,6 +181,8 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Behavior.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Graph.h" />
+    <ClInclude Include="Graph2D.h" />
     <ClInclude Include="KeyboardBehavior.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SeekBehavior.h" />

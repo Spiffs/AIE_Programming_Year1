@@ -2,6 +2,7 @@
 #include "Behavior.h"
 #include "raymath.h"
 
+#include <functional>
 
 class SeekBehavior : public Behavior
 {
@@ -19,10 +20,14 @@ public:
 	const float& GetTargetRadius() const;
 	void SetTargetRadius(const float & radius);
 
+	void OnArrive(std::function<void()> callback);
+
 protected:
 
 	Vector2 m_target;
 	float m_targetRadius = 1.0f;
+
+	std::function<void()> m_onArriveFn;
 
 };
 

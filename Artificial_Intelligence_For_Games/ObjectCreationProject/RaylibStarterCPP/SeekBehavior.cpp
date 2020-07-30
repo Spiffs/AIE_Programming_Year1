@@ -14,12 +14,25 @@ SeekBehavior::~SeekBehavior()
 
 void SeekBehavior::Update(GameObject* obj, float deltaTime)
 {
+
+	float distToTarget = Vector2Distance(obj->GetPosition(), m_target);
+	if (distToTarget < m_targetRadius)
+	{
+		if (m_onArriveFn)
+			m_onArriveFn();
+	}
+
 	Vector2 heading = Vector2Add(obj->GetPosition(), obj->GetVelocity());
-	float headingLen = Vector2Length(obj->GetVelocity());
+	float headingLen = Vector2Length(heading);
 
-	Vector2 vecToTarget = Vector2Normalize(Vector2Subtract(m_target, obj->GetPosition()));
+	Vector2 dirToTarget = Vector2Normalize(Vector2Subtract(m_target, obj->GetPosition()));
+	Vector2 vecToTarget = Vector2Scale(dirToTarget, headingLen);
 
-	//__________________________________________________________________________________________________________________ 21.50 timestamp on 06 aie seekbehavior video	HAXXOR
+	Vector2 targetForcePos = Vector2Add(vecToTarget, obj->GetPosition());
+	Vector2 forceDir = Vector2Subtract(targetForcePos, heading);
+
+	obj->ApplyForce(forceDir);
+
 }
 
 void SeekBehavior::Draw(GameObject* obj)
@@ -46,4 +59,9 @@ const float& SeekBehavior::GetTargetRadius() const
 void SeekBehavior::SetTargetRadius(const float& radius)
 {
 	m_targetRadius = radius;
+}
+
+void SeekBehavior::OnArrive(std::function<void()> callback)
+{
+	m_onArriveFn = callback;
 }

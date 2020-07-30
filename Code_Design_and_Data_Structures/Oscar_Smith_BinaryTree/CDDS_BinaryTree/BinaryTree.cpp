@@ -37,7 +37,7 @@ void BinaryTree::Insert(int a_nValue)
 	// check if the new node must be set as 
 	if (IsEmpty() == true)
 	{
-		m_pRoot->SetData(a_nValue);
+		m_pRoot = new TreeNode(a_nValue);
 	}
 	else
 	{
@@ -46,9 +46,9 @@ void BinaryTree::Insert(int a_nValue)
 		TreeNode* pCurrent = nullptr;
 
 		bool exists = false;
-		pParent = m_pRoot;
+		pCurrent = m_pRoot;
 
-		while (pCurrent != NULL)
+		while (pCurrent != NULL && !exists)
 		{
 			pParent = pCurrent;
 
@@ -56,21 +56,21 @@ void BinaryTree::Insert(int a_nValue)
 				pCurrent = pCurrent->GetLeft();
 
 			else if (a_nValue > pCurrent->GetData())
-				pCurrent = pCurrent->GetLeft();
+				pCurrent = pCurrent->GetRight();
 
 			else if (a_nValue == pCurrent->GetData())
 				exists = true;
 		}
 
-		if (exists)
-		{
-			if (pCurrent->GetData() <= pParent->GetData())
-				pParent->SetLeft(pCurrent);
-			else
-				pParent->SetRight(pCurrent);
-		}
+		TreeNode* pAddition = new TreeNode(a_nValue);
 
-		delete[] pParent;
+		if (!exists)
+		{
+			if (pAddition->GetData() < pParent->GetData())
+				pParent->SetLeft(pAddition);
+			else
+				pParent->SetRight(pAddition);
+		}
 	}
 }
 
@@ -90,7 +90,7 @@ void BinaryTree::Insert(TreeNode* a_nValue)
 		bool exists = false;
 		pCurrent = m_pRoot;
 
-		while (pCurrent != NULL)
+		while (pCurrent != NULL && !exists)
 		{
 			pParent = pCurrent;
 
@@ -104,16 +104,15 @@ void BinaryTree::Insert(TreeNode* a_nValue)
 				exists = true;
 		}
 
-		if (exists)
-		{
-			if (pCurrent->GetData() < pParent->GetData())
-				pParent->SetLeft(pCurrent);
-			else
-				pParent->SetRight(pCurrent);
-		}
+		TreeNode* pAddition = new TreeNode(a_nValue);
 
-		delete[] a_nValue;
-		delete[] pParent;
+		if (!exists)
+		{
+			if (pAddition->GetData() < pParent->GetData())
+				pParent->SetLeft(pAddition);
+			else
+				pParent->SetRight(pAddition);
+		}
 	}
 }
 
@@ -188,7 +187,6 @@ void BinaryTree::Remove(int a_nValue)
 
 	}
 
-	delete[] pRemove;
 }
 
 void BinaryTree::PrintOrdered()
