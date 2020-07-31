@@ -1,6 +1,8 @@
 #pragma once
 
 class GameObject;
+class Graph2D;
+class Graph2DEditor;
 
 class Application
 {
@@ -22,6 +24,7 @@ private:
 	int m_windowWidth;
 	int m_windowHeight;
 
-	GameObject* m_player1 = nullptr;
+	Graph2DEditor* m_graphEditor = nullptr;
+	Graph2D* m_graph = nullptr;
 
 };

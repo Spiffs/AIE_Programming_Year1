@@ -32,7 +32,11 @@ public:
 	// decpnstructor
 	virtual ~Graph()
 	{
-
+		for (auto node : m_nodes)
+		{
+			delete node;
+		}
+		m_nodes.clear();
 	}
 
 	// add node
@@ -56,7 +60,7 @@ public:
 		return m_nodes;
 	}
 
-private:
+protected:
 
 	std::vector<Node*> m_nodes;
 };

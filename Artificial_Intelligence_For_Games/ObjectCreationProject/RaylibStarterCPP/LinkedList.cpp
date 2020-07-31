@@ -185,7 +185,7 @@ int LinkedList::First()
 // returns the last value of the list
 int LinkedList::Last()
 {
-		return m_list[m_usedlength - 1].GetData();
+	return m_list[m_usedlength - 1].GetData();
 }
 
 // returns the pacement of the first value of the list returns -1 on fail

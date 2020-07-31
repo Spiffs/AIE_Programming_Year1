@@ -20,6 +20,9 @@ int main()
     cout << "First: " << list_object.Begin() << endl;
     cout << "Last: " << list_object.End() << endl;
 
+    list_object.PopFront();
+
+    cout << "First: " << list_object.Begin() << endl;
 
     return 1;
 }
