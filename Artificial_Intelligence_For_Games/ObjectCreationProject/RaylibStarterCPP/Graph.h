@@ -1,5 +1,7 @@
 #pragma once
+#include <list>
 #include <vector>
+#include <functional>
 
 template<class TNodeData, class TEdgeData>
 class Graph
@@ -38,6 +40,35 @@ public:
 		}
 		m_nodes.clear();
 	}
+
+	// FIFO
+	Node* ForEachBFS(Node* startNode, std::function<bool(Node * n)> process)
+	{
+		std::list<Node*> mStack;
+		std::list<Node*> mVisited;
+
+		mStack.push_back(startNode);
+		
+		while (!mStack.empty())
+		{
+			Node* temp = mStack.front();
+			mStack.pop_front();
+			process(temp);
+			
+			mVisited.push_back(temp);
+			for (int i = 0; i < temp->connections.size(); i++)
+			{
+
+			}
+		}
+	}
+
+	// LIFO
+	Node* ForEachDFS(Node* startNode, std::function<bool(Node * n)> process)
+	{
+		// todo, implement pseudo code here
+	}
+
 
 	// add node
 	Node* AddNode(const TNodeData& data)
