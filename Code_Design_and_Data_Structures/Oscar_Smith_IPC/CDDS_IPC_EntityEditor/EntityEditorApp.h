@@ -2,6 +2,7 @@
 #include <vector>
 #include "raylib.h"
 #include "WinInc.h"
+#include <windows.h>
 
 struct Entity {
 	float x = 0, y = 0;
@@ -22,33 +23,18 @@ public:
 	void Update(float deltaTime);
 	void Draw();
 
-	void SendEntries()
-	{
-		int size = sizeof(m_entities) / sizeof(m_entities[0]);
-
-		HANDLE fileHandle = CreateFileMapping(
-			INVALID_HANDLE_VALUE,
-			NULL,
-			PAGE_READWRITE,
-			0, size,
-			L"MySharedMemory"
-		);
-
-		void * data = MapViewOfFile(fileHandle, FILE_MAP_ALL_ACCESS, 0, 0, size);
-
-		CopyMemory(data, m_entities, size);
-		CloseHandle(fileHandle);
-
-		UnmapViewOfFile(data);
-	}
+	void LoadFileHandles();
+	void UnloadFileHandles();
+	void UpdateFileHandles();
 
 protected:
 	int m_screenWidth;
 	int m_screenHeight;
 
 	// define a block of entities that should be shared
-	enum { ENTITY_COUNT = 10 };
+	enum { ENTITY_COUNT = 9 };
 	Entity m_entities[ENTITY_COUNT];
 
-	HANDLE h;
+	HANDLE mappedEntitiySizeFileHandle;
+	HANDLE mappedEntitiyFileHandle;
 };

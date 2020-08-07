@@ -55,6 +55,8 @@ void Application::Load()
 	m_graphEditor = new Graph2DEditor();
 	m_graphEditor->SetGraph(m_graph);
 
+	m_graph->TestGraph();
+
 }
 
 

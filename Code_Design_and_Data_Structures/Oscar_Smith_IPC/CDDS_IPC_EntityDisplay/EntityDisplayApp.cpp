@@ -18,11 +18,18 @@ bool EntityDisplayApp::Startup() {
 
 void EntityDisplayApp::Shutdown() {
 
+	//delete[] data;
+	
+
 	CloseWindow();        // Close window and OpenGL context
+	
+	
+	CloseHandle(mappedEntitiySizeFileHandle);
+	CloseHandle(mappedEntitiyFileHandle);
 }
 
 void EntityDisplayApp::Update(float deltaTime) {
-
+	ReadEntries();
 }
 
 void EntityDisplayApp::Draw() {
@@ -31,7 +38,7 @@ void EntityDisplayApp::Draw() {
 	ClearBackground(RAYWHITE);
 
 	// draw entities
-	for (auto ) {
+	for (Entity entity : m_entities) {
 		DrawRectanglePro(
 			Rectangle{ entity.x, entity.y, entity.size, entity.size }, // rectangle
 			Vector2{ entity.size / 2, entity.size / 2 }, // origin

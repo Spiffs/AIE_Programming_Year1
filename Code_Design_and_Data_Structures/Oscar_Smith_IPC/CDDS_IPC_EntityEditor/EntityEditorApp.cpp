@@ -1,5 +1,5 @@
 #include "EntityEditorApp.h"
-#include <windows.h>
+
 #include <random>
 #include <time.h>
 
@@ -21,6 +21,8 @@ bool EntityEditorApp::Startup() {
 	InitWindow(m_screenWidth, m_screenHeight, "EntityDisplayApp");
 	SetTargetFPS(60);
 
+	LoadFileHandles();
+
 	srand(time(nullptr));
 	for (auto& entity : m_entities) {
 		entity.x = rand()%m_screenWidth;
@@ -37,7 +39,7 @@ bool EntityEditorApp::Startup() {
 }
 
 void EntityEditorApp::Shutdown() {
-
+	UnloadFileHandles();
 	CloseWindow();        // Close window and OpenGL context
 }
 
@@ -102,6 +104,8 @@ void EntityEditorApp::Update(float deltaTime) {
 		if (m_entities[i].y < 0)
 			m_entities[i].y += m_screenHeight;
 	}
+
+	UpdateFileHandles();
 }
 
 void EntityEditorApp::Draw() {
@@ -122,4 +126,51 @@ void EntityEditorApp::Draw() {
 	DrawText("Press ESC to quit", 630, 15, 12, LIGHTGRAY);
 
 	EndDrawing();
+}
+
+void EntityEditorApp::LoadFileHandles()
+{
+	mappedEntitiySizeFileHandle = CreateFileMapping(
+		INVALID_HANDLE_VALUE,
+		nullptr,
+		PAGE_READWRITE,
+		0,
+		sizeof(int), // how many bytes
+		L"bd5784ac-c657-4bf1-abe3-02fd44fdf5f1");
+
+	mappedEntitiyFileHandle = CreateFileMapping(
+		INVALID_HANDLE_VALUE,
+		nullptr,
+		PAGE_READWRITE,
+		0,
+		sizeof(Entity) * ENTITY_COUNT, // how many bytes
+		L"bd5784ac-c657-4bf1-abe3-02fd44fdf5f0" );
+
+	
+}
+void EntityEditorApp::UnloadFileHandles()
+{
+	//CopyMemory(data, m_entities, size);
+	CloseHandle(mappedEntitiySizeFileHandle);
+	CloseHandle(mappedEntitiyFileHandle);
+
+	
+}
+void EntityEditorApp::UpdateFileHandles()
+{
+	
+	int* pSize = (int*)MapViewOfFile(mappedEntitiySizeFileHandle, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(int));
+	*pSize = ENTITY_COUNT; // write
+
+
+	// TODO: Get memory map to data for entity array
+	// write the data
+	int size = sizeof(Entity) * ENTITY_COUNT;
+	Entity* data = (Entity *)MapViewOfFile(mappedEntitiyFileHandle, FILE_MAP_ALL_ACCESS, 0, 0, size);
+	for (int i = 0; i < ENTITY_COUNT; i++)
+	{
+		data[i] = m_entities[i]; // write to our mapped memory
+	}
+	// UnmapViewOfFile(data);
+
 }
