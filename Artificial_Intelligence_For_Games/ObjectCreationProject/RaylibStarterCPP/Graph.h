@@ -42,7 +42,7 @@ public:
 	}
 
 	// FIFO
-	Node* ForEachBFS(Node* startNode, std::function<bool(Node * n)> process)
+	void ForEachBFS(Node* startNode, std::function<bool(Node * n)> process)
 	{
 		std::list<Node*> mStack;
 		std::list<Node*> mVisited;
@@ -64,7 +64,7 @@ public:
 	}
 
 	// LIFO
-	Node* ForEachDFS(Node* startNode, std::function<bool(Node * n)> process)
+	void ForEachDFS(Node* startNode, std::function<bool(Node * n)> process)
 	{
 		// todo, implement pseudo code here
 	}
