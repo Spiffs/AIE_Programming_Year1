@@ -3,6 +3,7 @@
 class GameObject;
 class Graph2D;
 class Graph2DEditor;
+class Chicken;
 
 class Application
 {
@@ -26,5 +27,7 @@ private:
 
 	Graph2DEditor* m_graphEditor = nullptr;
 	Graph2D* m_graph = nullptr;
+	Chicken* chicken1;
+	bool debug = false;
 
 };

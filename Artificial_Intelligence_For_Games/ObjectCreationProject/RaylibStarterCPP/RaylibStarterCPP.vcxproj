@@ -170,7 +170,6 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="Graph.cpp" />
     <ClCompile Include="Graph2D.cpp" />
     <ClCompile Include="Graph2DEditor.cpp" />
     <ClCompile Include="KeyboardBehavior.cpp" />

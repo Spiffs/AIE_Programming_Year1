@@ -19,19 +19,17 @@ void Application::Load()
 {
 	m_graph = new Graph2D();
 
-	int numRows = 4;
-	int numColumns = 6;
 	float xOffset = 100;
 	float yOffset = 100;
-	float spacing = 50;
+	float spacing = 10;
 
-	for (int y = 0; y < numRows; y++)
+	for (int y = 0; y < m_windowHeight; y++)
 	{
-		for (int x = 0; x < numColumns; x++)
+		for (int x = 0; x < m_windowWidth; x++)
 		{
 			m_graph->AddNode({
-				x * spacing + xOffset,
-				y * spacing + yOffset
+				x * spacing,
+				y * spacing
 				});
 		}
 	}
@@ -55,7 +53,6 @@ void Application::Load()
 	m_graphEditor = new Graph2DEditor();
 	m_graphEditor->SetGraph(m_graph);
 
-	m_graph->TestGraph();
 
 }
 

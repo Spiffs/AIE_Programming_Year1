@@ -36,9 +36,6 @@
     <ClCompile Include="Graph2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Graph.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Graph2DEditor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
