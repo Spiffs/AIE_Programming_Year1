@@ -17,19 +17,19 @@ Application::~Application() { }
 
 void Application::Load()
 {
-	m_graph = new Graph2D();
+	/*m_graph = new Graph2D();
 
 	float xOffset = 100;
 	float yOffset = 100;
-	float spacing = 10;
+	float spacing = 50;
 
-	for (int y = 0; y < m_windowHeight; y++)
+	for (int y = 0; y < m_windowHeight / spacing; y++)
 	{
-		for (int x = 0; x < m_windowWidth; x++)
+		for (int x = 0; x < m_windowWidth / spacing; x++)
 		{
 			m_graph->AddNode({
-				x * spacing,
-				y * spacing
+				x * spacing + xOffset,
+				y * spacing + yOffset
 				});
 		}
 	}
@@ -51,9 +51,12 @@ void Application::Load()
 	}
 
 	m_graphEditor = new Graph2DEditor();
-	m_graphEditor->SetGraph(m_graph);
+	m_graphEditor->SetGraph(m_graph);*/
 
-
+	player = new Player();
+	player->SetPosition(Vector2{ 100,100 });
+	player->SetBehavior(nullptr);
+	player->SetFriction(1.0f);
 }
 
 
@@ -61,6 +64,8 @@ void Application::Unload()
 {
 	delete m_graph;
 	m_graph = nullptr;
+	delete player;
+	player = nullptr;
 }
 
 void Application::Run()
@@ -82,7 +87,8 @@ void Application::Run()
 
 void Application::Update(float dt)
 {
-	m_graphEditor->Update(dt);
+	player->Update(dt);
+	//m_graphEditor->Update(dt);
 }
 
 void Application::Draw()
@@ -90,7 +96,9 @@ void Application::Draw()
 	BeginDrawing();
 	ClearBackground(RAYWHITE);
 	
-	m_graphEditor->Draw(); 
+	player->Draw();
+
+	//m_graphEditor->Draw(); 
 
 	EndDrawing();
 }

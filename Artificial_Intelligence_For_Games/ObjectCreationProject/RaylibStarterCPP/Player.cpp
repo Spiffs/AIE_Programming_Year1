@@ -18,7 +18,7 @@ Player::Player()
 Player::~Player()
 {
 	SetBehavior(nullptr);
-	// delete m_seekBehavior
+	delete m_seekBehavior;
 	delete m_kbBehavior;
 }
 

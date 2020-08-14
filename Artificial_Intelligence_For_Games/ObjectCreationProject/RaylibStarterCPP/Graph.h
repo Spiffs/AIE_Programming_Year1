@@ -44,7 +44,7 @@ public:
 	// FIFO
 	void ForEachBFS(Node* startNode, std::function<bool(Node * n)> process)
 	{
-		std::list<Node*> mStack;
+		/*std::list<Node*> mStack;
 		std::list<Node*> mVisited;
 
 		mStack.push_back(startNode);
@@ -60,7 +60,7 @@ public:
 			{
 
 			}
-		}
+		}*/
 	}
 
 	// LIFO
