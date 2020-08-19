@@ -23,8 +23,6 @@ void Application::Load()
 	float yOffset = 10;
 	float spacing = 15;
 
-
-
 	for (int y = 0; y < m_windowHeight / spacing; y++)
 	{
 		for (int x = 0; x < m_windowWidth / spacing; x++)

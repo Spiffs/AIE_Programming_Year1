@@ -5,12 +5,16 @@ Chicken::Chicken(Application* app) : GameObject(app)
 {
 	m_kbBehavior = new KeyboardBehavior();
 	m_seekBehavior = new SeekBehavior();
+	m_wanderBehavior = new WanderBehavior();
 	m_seekBehavior->SetTargetRadius(25.0f);
 
 	m_seekBehavior->OnArrive([this]()
 		{
 			SetBehavior(m_kbBehavior);
 		});
+
+
+
 }
 
 Chicken::~Chicken()
@@ -18,6 +22,7 @@ Chicken::~Chicken()
 	SetBehavior(nullptr);
 	delete m_seekBehavior;
 	delete m_kbBehavior;
+	delete m_wanderBehavior;
 }
 
 void Chicken::Load()
@@ -31,20 +36,45 @@ void Chicken::Load()
 	SetPosition({ 180.0f, 180.0f });
 }
 
+bool Chicken::Moving()
+{
+	if (temppos.x != m_position.x ||
+		temppos.y != m_position.y)
+		return true;
+	else
+		return false;
+}
+
 void Chicken::Update(float deltaTime)
 {
+	if (m_behavior == m_kbBehavior)
+		CharacterState = 1;
 
-	 
-	// std::vector<Graph2D::Node*> nearbyNodes;
-	// GetApp()->GetGraph()->GetNearbyNodes(GetPosition(), 20, nearbyNodes);
-
-	if (IsMouseButtonPressed(0))
-	{
-		m_seekBehavior->SetTarget(GetMousePosition());
-		SetBehavior(m_seekBehavior);
-	}
 
 	GameObject::Update(deltaTime);
+	Timer();
+	// TODO: flip chicken 
+
+	switch (CharacterState)
+	{
+	case 1:
+
+		if (!Moving())
+		{
+			if (TimerSeconds().x == 1)
+			{
+
+			}
+		}
+
+		break;
+	}
+
+
+
+	// update temp pos
+	temppos.x = m_position.x;
+	temppos.y = m_position.y;
 }
 
 void Chicken::Draw()
@@ -67,5 +97,5 @@ void Chicken::Draw()
 		DrawTextureEx(ChickenEat2, m_position, 0.0f, 1.5f, WHITE);
 		break;
 	}
-	
+
 }

@@ -15,6 +15,7 @@ public:
 	{
 		TNodeData data;
 		std::vector<Edge> connections;
+		unsigned int access = 1;
 	};
 
 	struct Edge

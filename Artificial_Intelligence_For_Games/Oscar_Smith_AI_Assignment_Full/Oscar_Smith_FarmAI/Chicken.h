@@ -18,6 +18,8 @@ public:
 	virtual void Update(float deltaTime);
 	virtual void Draw();
 
+	bool Moving();
+
 protected:
 	Texture2D ChickenStand; // texture state 1
 	Texture2D ChickenWalk1; // texture state 2
@@ -26,12 +28,15 @@ protected:
 	Texture2D ChickenEat2; // texture state 5
 	int textureState = 1;
 
-	int timeStamp = 0;
+	int CharacterState = 0;
 	
 	// behavior
 
+	Vector2 temppos;
+
 	KeyboardBehavior* m_kbBehavior;
 	SeekBehavior* m_seekBehavior;
+	WanderBehavior* m_wanderBehavior;
 
 };
 

@@ -8,6 +8,14 @@ class Behavior;
 class GameObject
 {
 public:
+
+    struct Timer60
+    {
+        int framecount = 0;
+        float seconds = 0;
+    };
+
+
     GameObject(Application *app);
     virtual ~GameObject();
 
@@ -28,6 +36,11 @@ public:
 
     void SetBehavior(Behavior* behavior);
 
+    void ResetTimer();
+    void Timer();
+    Vector2 TimerSeconds();
+
+
     Application* GetApp();
 
 protected:
@@ -37,6 +50,8 @@ protected:
     float m_friction = 0.0f;
 
     Behavior* m_behavior = nullptr;
+
+    Timer60 timer;
 
     Application* m_app = nullptr;
 

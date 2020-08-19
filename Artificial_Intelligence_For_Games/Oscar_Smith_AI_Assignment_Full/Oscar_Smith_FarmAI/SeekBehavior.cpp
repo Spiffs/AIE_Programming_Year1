@@ -36,8 +36,7 @@ void SeekBehavior::Update(GameObject* obj, float deltaTime)
 
 void SeekBehavior::Draw(GameObject* obj)
 {
-	DrawCircle(m_target.x, m_target.y, m_targetRadius, LIGHTGRAY);
-	DrawCircle(m_target.x, m_target.y, 4, GRAY);
+
 }
 
 const Vector2& SeekBehavior::GetTarget() const

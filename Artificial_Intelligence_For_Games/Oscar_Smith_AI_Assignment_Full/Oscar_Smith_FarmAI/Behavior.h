@@ -1,4 +1,5 @@
 #pragma once
+#include "Application.h"
 
 class GameObject;
 
@@ -12,6 +13,6 @@ public:
 	virtual void Draw(GameObject* obj) { }
 
 protected:
-
+	Application* m_app;
 
 };

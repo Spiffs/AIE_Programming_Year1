@@ -1,6 +1,5 @@
 #include "WanderBehavior.h"
 #include "GameObject.h"
-#include <iostream>
 #include "Graph2DEditor.h"
 
 WanderBehavior::WanderBehavior()
@@ -13,15 +12,19 @@ WanderBehavior::~WanderBehavior()
 
 }
 
+void WanderBehavior::FindPath()
+{
+	m_path = m_app->GetGraph()->PathFind( );
+}
+
 void WanderBehavior::Update(Graph2D* a_graph, GameObject* obj, float deltaTime)
 {
-
+	m_target = m_path.back()->data;
 
 	float distToTarget = Vector2Distance(obj->GetPosition(), m_target);
 	if (distToTarget < m_targetRadius)
 	{
-		if (m_onArriveFn)
-			m_onArriveFn();
+		m_path.pop_back();
 	}
 
 	Vector2 heading = Vector2Add(obj->GetPosition(), obj->GetVelocity());
@@ -39,19 +42,9 @@ void WanderBehavior::Update(Graph2D* a_graph, GameObject* obj, float deltaTime)
 
 void WanderBehavior::Draw(GameObject* obj)
 {
-	DrawCircle(m_target.x, m_target.y, m_targetRadius, LIGHTGRAY);
-	DrawCircle(m_target.x, m_target.y, 4, GRAY);
+	
 }
 
-const Vector2& WanderBehavior::GetTarget() const
-{
-	return m_target;
-}
-
-void WanderBehavior::SetTarget(const Vector2& target)
-{
-	m_target = target;
-}
 
 const float& WanderBehavior::GetTargetRadius() const
 {
@@ -63,7 +56,4 @@ void WanderBehavior::SetTargetRadius(const float& radius)
 	m_targetRadius = radius;
 }
 
-void WanderBehavior::OnArrive(std::function<void()> callback)
-{
-	m_onArriveFn = callback;
-}
+

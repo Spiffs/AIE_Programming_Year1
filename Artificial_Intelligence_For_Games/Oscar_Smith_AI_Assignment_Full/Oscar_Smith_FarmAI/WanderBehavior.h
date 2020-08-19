@@ -2,6 +2,7 @@
 #include "Behavior.h"
 #include "raymath.h"
 #include "Graph2D.h"
+#include <list>
 
 #include <functional>
 
@@ -18,17 +19,15 @@ public:
 	const Vector2& GetTarget() const;
 	void SetTarget(const Vector2& target);
 
-	const float& GetTargetRadius() const;
 	void SetTargetRadius(const float& radius);
-
-	void OnArrive(std::function<void()> callback);
+	const float& GetTargetRadius() const;
+	void FindPath();
 
 protected:
 
-	Vector2 m_target;
+	std::list<Graph2D::Node*> m_path;
 	float m_targetRadius = 1.0f;
-
-	std::function<void()> m_onArriveFn;
+	Vector2 m_target;
 
 };
 

@@ -89,3 +89,24 @@ Application* GameObject::GetApp()
 {
     return m_app;
 }
+
+void GameObject::ResetTimer()
+{
+    timer.framecount = 0;
+    timer.seconds = 0;
+}
+
+void GameObject::Timer()
+{
+    timer.framecount++;
+    if (timer.framecount == 0)
+    {
+        timer.seconds++;
+        timer.framecount = 0;
+    }
+}
+
+Vector2 GameObject::TimerSeconds()
+{
+    return { timer.seconds, timer.framecount };
+}
