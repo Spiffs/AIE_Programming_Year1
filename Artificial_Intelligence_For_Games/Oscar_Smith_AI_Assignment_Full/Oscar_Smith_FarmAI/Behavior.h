@@ -13,6 +13,5 @@ public:
 	virtual void Draw(GameObject* obj) { }
 
 protected:
-	Application* m_app;
 
 };

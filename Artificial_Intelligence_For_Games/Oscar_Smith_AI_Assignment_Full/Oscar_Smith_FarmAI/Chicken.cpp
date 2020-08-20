@@ -4,23 +4,13 @@
 Chicken::Chicken(Application* app) : GameObject(app)
 {
 	m_kbBehavior = new KeyboardBehavior();
-	m_seekBehavior = new SeekBehavior();
 	m_wanderBehavior = new WanderBehavior();
-	m_seekBehavior->SetTargetRadius(25.0f);
-
-	m_seekBehavior->OnArrive([this]()
-		{
-			SetBehavior(m_kbBehavior);
-		});
-
-
-
+	m_wanderBehavior->SetTargetRadius(12.0f);
 }
 
 Chicken::~Chicken()
 {
 	SetBehavior(nullptr);
-	delete m_seekBehavior;
 	delete m_kbBehavior;
 	delete m_wanderBehavior;
 }
@@ -33,16 +23,32 @@ void Chicken::Load()
 	ChickenEat1 = LoadTexture("../Images/pixil-frame-0 (3).png");
 	ChickenEat2 = LoadTexture("../Images/pixil-frame-0 (4).png");
 
-	SetPosition({ 180.0f, 180.0f });
-}
+	ChickenStandflip = LoadTexture("../Images/pixil-frame-0 (7).png");
+	ChickenWalk1flip = LoadTexture("../Images/pixil-frame-0 (8).png");
+	ChickenWalk2flip = LoadTexture("../Images/pixil-frame-0 (9).png");
+	ChickenEat1flip = LoadTexture("../Images/pixil-frame-0 (10).png");
+	ChickenEat2flip = LoadTexture("../Images/pixil-frame-0 (11).png");
 
-bool Chicken::Moving()
-{
-	if (temppos.x != m_position.x ||
-		temppos.y != m_position.y)
-		return true;
-	else
-		return false;
+	bool validpos = false;
+	while (!validpos)
+	{
+		int x = (rand() % 16) + 3;
+		int y = (rand() % 25) + 11;
+
+		for (auto& node : m_app->GetGraph()->GetNodes())
+		{
+			if ((node->data.x - 7) / 15 == x &&
+				(node->data.y - 7) / 15 == y &&
+				node->access == 2)
+			{
+				validpos = true;
+				SetPosition({ (float)x * 15, (float)y * 15 });
+			}
+		}
+	}
+
+	SetBehavior(nullptr);
+	SetFriction(8.0f);
 }
 
 void Chicken::Update(float deltaTime)
@@ -50,52 +56,170 @@ void Chicken::Update(float deltaTime)
 	if (m_behavior == m_kbBehavior)
 		CharacterState = 1;
 
-
 	GameObject::Update(deltaTime);
 	Timer();
-	// TODO: flip chicken 
 
-	switch (CharacterState)
+	int y;
+	int timer = 1;
+
+	switch (RandomTimer)
 	{
+	case 0:
+		timer = rand() % 4;
+		RandomTimer = 1;
+		break;
 	case 1:
-
-		if (!Moving())
+		switch (CharacterState)
 		{
-			if (TimerSeconds().x == 1)
-			{
-
-			}
+		case 0:
+		{
+			break;
 		}
+		case 1:
+		{
+			if (TimerSeconds().x >= timer)
+			{
+				RandomTimer = 0;
+				CharacterState++;
+				ResetTimer();
+			}
+			break;
+		}
+		case 2:
+		{
+			y = TimerSeconds().y;
+			if (y % 10 == 0)
+			{
+				if (textureState == 4)
+					textureState = 5;
+				else if (textureState == 5)
+					textureState = 4;
+				else
+					textureState = 4;
+			}
+			if (TimerSeconds().x >= timer && TimerSeconds().y >= 20)
+			{
+				RandomTimer = 0;
+				CharacterState++;
+				ResetTimer();
+			}
+			break;
+		}
+		case 3:
+		{
+			textureState = 1;
+			if (TimerSeconds().x >= timer)
+			{
+				RandomTimer = 0;
+				CharacterState++;
+				ResetTimer();
+			}
+			break;
+		}
+		case 4:
+		{
+			Graph2D::Node* tempEnd = nullptr;
+			Graph2D::Node* tempStart = nullptr;
 
+			std::vector<Graph2D::Node*> tempVector;
+			m_app->GetGraph()->GetNearbyNodes({ m_position.x, m_position.y }, 15, tempVector);
+
+			// setting tempEnd
+			tempEnd = tempVector.back();
+
+			bool found = false;
+			while (!found)
+			{
+				int x = (rand() % 16) + 3;
+				int y = (rand() % 25) + 11;
+				for (auto& node : m_app->GetGraph()->GetNodes())
+				{
+					if ((node->data.x - 7) / 15 == x &&
+						(node->data.y - 7) / 15 == y &&
+						node->access == 2)
+					{
+						// setting tempStart
+						tempStart = node;
+						found = true;
+					}
+				}
+			}
+
+			SetBehavior(m_wanderBehavior);
+			m_wanderBehavior->SetPath(m_app->GetGraph()->PathFind(tempStart, tempEnd));
+
+			CharacterState++;
+			break;
+		}
+		case 5:
+		{
+			if (m_behavior == nullptr)
+				CharacterState = 1;
+			break;
+		}
+		}
 		break;
 	}
-
-
-
-	// update temp pos
-	temppos.x = m_position.x;
-	temppos.y = m_position.y;
+	if (m_velocity.x < 0)
+		textureflip = false;
+	else
+		textureflip = true;
 }
 
 void Chicken::Draw()
 {
-	switch (textureState)
+	int textureoffset = -12;
+
+	if (!textureflip)
 	{
-	case 1:
-		DrawTextureEx(ChickenStand, m_position, 0.0f, 1.5f, WHITE);
-		break;
-	case 2:
-		DrawTextureEx(ChickenWalk1, m_position, 0.0f, 1.5f, WHITE);
-		break;
-	case 3:
-		DrawTextureEx(ChickenWalk2, m_position, 0.0f, 1.5f, WHITE);
-		break;
-	case 4:
-		DrawTextureEx(ChickenEat1, m_position, 0.0f, 1.5f, WHITE);
-		break;
-	case 5:
-		DrawTextureEx(ChickenEat2, m_position, 0.0f, 1.5f, WHITE);
-		break;
+		switch (textureState)
+		{
+		case 1:
+			DrawTextureEx(ChickenStand, { m_position.x + textureoffset, m_position.y + textureoffset }, 0.0f, 1.5f, WHITE);
+			break;
+		case 2:
+			DrawTextureEx(ChickenWalk1, { m_position.x + textureoffset, m_position.y + textureoffset }, 0.0f, 1.5f, WHITE);
+			break;
+		case 3:
+			DrawTextureEx(ChickenWalk2, { m_position.x + textureoffset, m_position.y + textureoffset }, 0.0f, 1.5f, WHITE);
+			break;
+		case 4:
+			DrawTextureEx(ChickenEat1, { m_position.x + textureoffset, m_position.y + textureoffset }, 0.0f, 1.5f, WHITE);
+			break;
+		case 5:
+			DrawTextureEx(ChickenEat2, { m_position.x + textureoffset, m_position.y + textureoffset }, 0.0f, 1.5f, WHITE);
+			break;
+		}
+	}
+	else if (textureflip)
+	{
+		switch (textureState)
+		{
+		case 1:
+			DrawTextureEx(ChickenStandflip, { m_position.x + textureoffset, m_position.y + textureoffset }, 0.0f, 1.5f, WHITE);
+			break;
+		case 2:
+			DrawTextureEx(ChickenWalk1flip, { m_position.x + textureoffset, m_position.y + textureoffset }, 0.0f, 1.5f, WHITE);
+			break;
+		case 3:
+			DrawTextureEx(ChickenWalk2flip, { m_position.x + textureoffset, m_position.y + textureoffset }, 0.0f, 1.5f, WHITE);
+			break;
+		case 4:
+			DrawTextureEx(ChickenEat1flip, { m_position.x + textureoffset, m_position.y + textureoffset }, 0.0f, 1.5f, WHITE);
+			break;
+		case 5:
+			DrawTextureEx(ChickenEat2flip, { m_position.x + textureoffset, m_position.y + textureoffset }, 0.0f, 1.5f, WHITE);
+			break;
+		}
 	}
 
+	if (m_app->GetDebug())
+	{
+		m_wanderBehavior->Draw(this);
+	}
+}
+
+void Chicken::SetState(int state)
+{
+	CharacterState = state;
 }

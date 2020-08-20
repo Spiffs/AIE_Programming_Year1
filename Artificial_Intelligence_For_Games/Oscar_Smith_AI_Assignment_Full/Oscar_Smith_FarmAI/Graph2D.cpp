@@ -33,6 +33,14 @@ Graph2D::Node* Graph2D::FindNodePos(Vector2 pos)
 	}
 }
 
+void Graph2D::SetAccess(std::vector<int> graph)
+{
+	for (int x = 0; x < m_nodes.size(); x++)
+	{
+		m_nodes[x]->access = graph[x];
+	}
+}
+
 bool Graph2D::pfstackcheck(std::list<PFNode*>& aList, Node* aNode)
 {
 	int length = aList.size();
@@ -49,7 +57,6 @@ std::list<Graph2D::Node*> Graph2D::PathFind(Graph2D::Node* startNode, Graph2D::N
 {
 	std::list<PFNode*> mStack;
 	std::list<PFNode*> mVisited;
-	//std::map<PFNode*, Node*> mLinker;
 
 	PFNode* temp = new PFNode();
 	temp->graphNode = startNode;

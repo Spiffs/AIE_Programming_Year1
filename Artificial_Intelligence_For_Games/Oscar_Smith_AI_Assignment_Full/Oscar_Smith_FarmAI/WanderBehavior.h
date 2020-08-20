@@ -13,7 +13,7 @@ public:
 	WanderBehavior();
 	virtual ~WanderBehavior();
 
-	virtual void Update(Graph2D* a_graph, GameObject* obj, float deltaTime);
+	virtual void Update(GameObject* obj, float deltaTime);
 	virtual void Draw(GameObject* obj);
 
 	const Vector2& GetTarget() const;
@@ -21,12 +21,13 @@ public:
 
 	void SetTargetRadius(const float& radius);
 	const float& GetTargetRadius() const;
-	void FindPath();
+	
+	void SetPath(std::list<Graph2D::Node*> path);
 
 protected:
 
 	std::list<Graph2D::Node*> m_path;
-	float m_targetRadius = 1.0f;
+	float m_targetRadius = 5.0f;
 	Vector2 m_target;
 
 };

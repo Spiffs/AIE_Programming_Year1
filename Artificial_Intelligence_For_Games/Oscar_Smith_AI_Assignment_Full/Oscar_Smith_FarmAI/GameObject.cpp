@@ -16,11 +16,6 @@ void GameObject::Update(float deltaTime)
     if (m_behavior != nullptr)
         m_behavior->Update(this, deltaTime);
 
-    // ApplyForce( -m_velocity * m_friction );
-    // m_velocity += m_acceleration * deltaTime;
-    // m_position += m_velocity * deltaTime;
-    // clear the acceleration
-
     ApplyForce(Vector2Scale(Vector2Negate(m_velocity), m_friction));
     m_velocity = Vector2Add(m_velocity, Vector2Scale(m_acceleration, deltaTime));
     m_position = Vector2Add(m_position, Vector2Scale(m_velocity, deltaTime));
@@ -41,8 +36,15 @@ void GameObject::Draw()
 
 void GameObject::ApplyForce(const Vector2& force)
 {
-    // m_acceleration += force
-    m_acceleration = Vector2Add(m_acceleration, force);
+    int max = 200;
+    Vector2 newForce = force;
+    if (newForce.x > max)
+        newForce.x = max;
+
+    if (newForce.y > max)
+        newForce.y = max;
+
+    m_acceleration = Vector2Add(m_acceleration, newForce);
 }
 
 const Vector2& GameObject::GetPosition() const
@@ -99,7 +101,7 @@ void GameObject::ResetTimer()
 void GameObject::Timer()
 {
     timer.framecount++;
-    if (timer.framecount == 0)
+    if (timer.framecount == 60)
     {
         timer.seconds++;
         timer.framecount = 0;
@@ -108,5 +110,5 @@ void GameObject::Timer()
 
 Vector2 GameObject::TimerSeconds()
 {
-    return { timer.seconds, timer.framecount };
+    return { timer.seconds, (float)timer.framecount };
 }

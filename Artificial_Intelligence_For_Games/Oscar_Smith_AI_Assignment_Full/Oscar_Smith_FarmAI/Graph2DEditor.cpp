@@ -46,8 +46,18 @@ void Graph2DEditor::Draw()
 
 	for (auto node : m_graph->GetNodes())
 	{
-		DrawCircle(node->data.x, node->data.y, 1, LIGHTGRAY);
-		DrawCircleLines(node->data.x, node->data.y, 2, GRAY);
+		switch (node->access)
+		{
+		case 1:
+			DrawCircle(node->data.x, node->data.y, 1, LIGHTGRAY);
+			DrawCircleLines(node->data.x, node->data.y, 2, GRAY);
+			break;
+		case 2:
+			DrawCircle(node->data.x, node->data.y, 1, MAROON);
+			DrawCircleLines(node->data.x, node->data.y, 2, BROWN);
+			break;
+		}
+
 	}
 
 	auto mousePos = GetMousePosition();

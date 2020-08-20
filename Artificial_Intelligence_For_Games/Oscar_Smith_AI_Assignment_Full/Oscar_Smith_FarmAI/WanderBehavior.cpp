@@ -12,19 +12,27 @@ WanderBehavior::~WanderBehavior()
 
 }
 
-void WanderBehavior::FindPath()
+void WanderBehavior::SetPath(std::list<Graph2D::Node*> path)
 {
-	m_path = m_app->GetGraph()->PathFind( );
+	m_path = path;
 }
 
-void WanderBehavior::Update(Graph2D* a_graph, GameObject* obj, float deltaTime)
+void WanderBehavior::Update(GameObject* obj, float deltaTime)
 {
-	m_target = m_path.back()->data;
-
+	if (!m_path.empty())
+	{
+		m_target = m_path.front()->data;
+	}
+	else
+	{
+		obj->SetBehavior(nullptr);
+	}
 	float distToTarget = Vector2Distance(obj->GetPosition(), m_target);
+
 	if (distToTarget < m_targetRadius)
 	{
-		m_path.pop_back();
+		if (!m_path.empty())
+			m_path.pop_front();
 	}
 
 	Vector2 heading = Vector2Add(obj->GetPosition(), obj->GetVelocity());
@@ -42,9 +50,23 @@ void WanderBehavior::Update(Graph2D* a_graph, GameObject* obj, float deltaTime)
 
 void WanderBehavior::Draw(GameObject* obj)
 {
-	
+	for (auto node : m_path)
+	{
+		DrawCircle(node->data.x, node->data.y, 2, GREEN);
+		DrawCircleLines(node->data.x, node->data.y, 3, GRAY);
+	}
 }
 
+
+const Vector2& WanderBehavior::GetTarget() const
+{
+	return m_target;
+}
+
+void WanderBehavior::SetTarget(const Vector2& target)
+{
+	m_target = target;
+}
 
 const float& WanderBehavior::GetTargetRadius() const
 {

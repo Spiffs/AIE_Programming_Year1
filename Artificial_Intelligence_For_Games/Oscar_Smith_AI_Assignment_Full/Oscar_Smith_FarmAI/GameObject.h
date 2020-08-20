@@ -53,7 +53,7 @@ protected:
 
     Timer60 timer;
 
-    Application* m_app = nullptr;
+    Application* m_app;
 
 private:
 };
