@@ -149,21 +149,35 @@ void Chicken::Update(float deltaTime)
 			m_wanderBehavior->SetPath(m_app->GetGraph()->PathFind(tempStart, tempEnd));
 
 			CharacterState++;
+			ResetTimer();
 			break;
 		}
 		case 5:
 		{
 			if (m_behavior == nullptr)
 				CharacterState = 1;
-			break;
-		}
+			else
+			{
+				y = TimerSeconds().y;
+				if (y % 10 == 0)
+				{
+					if (textureState == 2)
+						textureState = 3;
+					else if (textureState == 3)
+						textureState = 2;
+					else
+						textureState = 2;
+				}
+				break;
+			}
 		}
 		break;
+		}
+		if (m_velocity.x < 0)
+			textureflip = false;
+		else
+			textureflip = true;
 	}
-	if (m_velocity.x < 0)
-		textureflip = false;
-	else
-		textureflip = true;
 }
 
 void Chicken::Draw()
