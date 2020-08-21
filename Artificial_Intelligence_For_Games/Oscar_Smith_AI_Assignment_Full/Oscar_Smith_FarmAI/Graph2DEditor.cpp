@@ -13,25 +13,7 @@ Graph2DEditor::~Graph2DEditor()
 
 void Graph2DEditor::Update(float deltaTime)
 {
-	if (IsMouseButtonPressed(0))
-	{
-		auto mousePos = GetMousePosition();
 
-		auto newNode = m_graph->AddNode(mousePos);
-
-		std::vector<Graph2D::Node*> nearbyNodes;
-		m_graph->GetNearbyNodes(mousePos, 15, nearbyNodes);
-
-		for (auto nearbyNode : nearbyNodes)
-		{
-			float dist = Vector2Distance(newNode->data, nearbyNode->data);
-			m_graph->AddEdge(newNode, nearbyNode, dist);
-			m_graph->AddEdge(nearbyNode, newNode, dist);
-		}
-
-		m_graph->SetSelected(*newNode);
-		//m_graph->ForEachBFS();
-	}
 }
 
 void Graph2DEditor::Draw()
@@ -58,17 +40,6 @@ void Graph2DEditor::Draw()
 			break;
 		}
 
-	}
-
-	auto mousePos = GetMousePosition();
-	DrawCircle(mousePos.x, mousePos.y, 5, LIGHTGRAY);
-
-	std::vector<Graph2D::Node*> nearbyNodes;
-	m_graph->GetNearbyNodes(mousePos, 15, nearbyNodes);
-
-	for (auto nearbyNode : nearbyNodes)
-	{
-		DrawLine(mousePos.x, mousePos.y, nearbyNode->data.x, nearbyNode->data.y, LIGHTGRAY);
 	}
 }
 

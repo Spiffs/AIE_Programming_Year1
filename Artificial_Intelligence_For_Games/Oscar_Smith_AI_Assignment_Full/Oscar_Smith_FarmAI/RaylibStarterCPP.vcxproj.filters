@@ -42,6 +42,9 @@
     <ClCompile Include="KeyboardBehavior.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Fox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -72,6 +75,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="KeyboardBehavior.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Fox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

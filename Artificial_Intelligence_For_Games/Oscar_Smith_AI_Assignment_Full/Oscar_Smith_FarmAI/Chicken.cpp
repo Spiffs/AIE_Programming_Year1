@@ -155,7 +155,10 @@ void Chicken::Update(float deltaTime)
 		case 5:
 		{
 			if (m_behavior == nullptr)
+			{
+				RandomTimer = 0;
 				CharacterState = 1;
+			}
 			else
 			{
 				y = TimerSeconds().y;
@@ -173,6 +176,7 @@ void Chicken::Update(float deltaTime)
 		}
 		break;
 		}
+
 		if (m_velocity.x < 0)
 			textureflip = false;
 		else

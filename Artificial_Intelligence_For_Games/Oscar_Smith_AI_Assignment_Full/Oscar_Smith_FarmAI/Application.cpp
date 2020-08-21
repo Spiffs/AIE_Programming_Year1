@@ -2,6 +2,7 @@
 #include "raylib.h"
 #include "GameObject.h"
 #include "Chicken.h"
+#include "Fox.h"
 
 #include "Graph2D.h"
 #include "Graph2DEditor.h"
@@ -101,6 +102,11 @@ void Application::Load()
 	chicken2->Load();
 	chicken3->Load();
 	chicken4->Load();
+	
+	fox = new Fox(this);
+	fox->Load();
+
+
 }
 
 
@@ -110,6 +116,7 @@ void Application::Unload()
 	delete[] chicken2;
 	delete[] chicken3;
 	delete[] chicken4;
+	delete[] fox;
 }
 
 void Application::Run()
@@ -144,6 +151,9 @@ void Application::Update(float dt)
 	chicken2->Update(dt);
 	chicken3->Update(dt);
 	chicken4->Update(dt);
+
+	fox->Update(dt);
+
 	m_graphEditor->Update(dt);
 }
 
@@ -161,6 +171,8 @@ void Application::Draw()
 	chicken2->Draw();
 	chicken3->Draw();
 	chicken4->Draw();
+
+	fox->Draw();
 
 	EndDrawing();
 }

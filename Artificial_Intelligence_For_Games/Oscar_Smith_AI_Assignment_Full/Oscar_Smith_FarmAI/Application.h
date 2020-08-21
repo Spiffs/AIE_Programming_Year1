@@ -6,6 +6,7 @@ class GameObject;
 class Graph2D;
 class Graph2DEditor;
 class Chicken;
+class Fox;
 
 class Application
 {
@@ -43,6 +44,8 @@ protected:
 	Chicken* chicken2;
 	Chicken* chicken3;
 	Chicken* chicken4;
+
+	Fox* fox;
 
 	bool debug = false;
 

@@ -40,7 +40,6 @@ protected:
 
 	// behavior
 	KeyboardBehavior* m_kbBehavior;
-
 	WanderBehavior* m_wanderBehavior;
 
 };
