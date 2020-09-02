@@ -26,7 +26,6 @@ public:
 
 	void ReadEntries()
 	{
-		//DWORD* numentries;
 		mappedEntitiySizeFileHandle = OpenFileMapping(FILE_MAP_ALL_ACCESS, FALSE, L"bd5784ac-c657-4bf1-abe3-02fd44fdf5f1");
 		mappedEntitiyFileHandle = OpenFileMapping(FILE_MAP_ALL_ACCESS, FALSE, L"bd5784ac-c657-4bf1-abe3-02fd44fdf5f0");
 
@@ -35,7 +34,7 @@ public:
 		if (pNumEntities == nullptr)
 			return;
 
-		// TODO: make sure m_entities has the right number of items in the collectiuon.
+		// TODO: make sure m_entities has the right number of items in the collection.
 
 		if ((int)m_entities.size() < *pNumEntities)
 		{
@@ -52,17 +51,11 @@ public:
 		{
 			m_entities[i] = data[i]; // write to our mapped memory
 		}
-
-		
-
-		// UnmapViewOfFile(data);
 	}
 
 protected:
 	int m_screenWidth;
 	int m_screenHeight;
-
-	//DWORD* data;
 
 	HANDLE mappedEntitiySizeFileHandle;
 	HANDLE mappedEntitiyFileHandle;
