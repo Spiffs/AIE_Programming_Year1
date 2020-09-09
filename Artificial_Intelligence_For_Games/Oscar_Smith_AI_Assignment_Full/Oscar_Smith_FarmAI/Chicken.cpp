@@ -3,7 +3,6 @@
 
 Chicken::Chicken(Application* app) : GameObject(app)
 {
-	m_kbBehavior = new KeyboardBehavior();
 	m_wanderBehavior = new WanderBehavior();
 	m_wanderBehavior->SetTargetRadius(12.0f);
 }
@@ -11,7 +10,6 @@ Chicken::Chicken(Application* app) : GameObject(app)
 Chicken::~Chicken()
 {
 	SetBehavior(nullptr);
-	delete m_kbBehavior;
 	delete m_wanderBehavior;
 }
 
@@ -53,9 +51,6 @@ void Chicken::Load()
 
 void Chicken::Update(float deltaTime)
 {
-	if (m_behavior == m_kbBehavior)
-		CharacterState = 1;
-
 	GameObject::Update(deltaTime);
 	Timer();
 
@@ -141,6 +136,7 @@ void Chicken::Update(float deltaTime)
 						// setting tempStart
 						tempStart = node;
 						found = true;
+						break;
 					}
 				}
 			}
@@ -154,7 +150,7 @@ void Chicken::Update(float deltaTime)
 		}
 		case 5:
 		{
-			if (m_behavior == nullptr)
+			if (m_behavior == nullptr) 
 			{
 				RandomTimer = 0;
 				CharacterState = 1;

@@ -33,7 +33,7 @@ void WanderBehavior::Update(GameObject* obj, float deltaTime)
 	{
 		if (!m_path.empty())
 			m_path.pop_front();
-	}
+	} 
 
 	Vector2 heading = Vector2Add(obj->GetPosition(), obj->GetVelocity());
 	float headingLen = Vector2Length(heading);

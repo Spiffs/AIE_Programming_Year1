@@ -30,6 +30,10 @@ public:
 
 	Graph2D* GetGraph() { return m_graph; }
 
+	Chicken* ClosestToChicken();
+	Vector2 GetFoxPos();
+	Vector2 GetChickenPos(int chicken);
+
 protected:
 
 	int m_windowWidth;

@@ -39,7 +39,6 @@ protected:
 	int RandomTimer = 0;
 
 	// behavior
-	KeyboardBehavior* m_kbBehavior;
 	WanderBehavior* m_wanderBehavior;
 
 };

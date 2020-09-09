@@ -14,21 +14,23 @@ Fox::~Fox()
 
 void Fox::Load()
 {
-	FoxStand1 = LoadTexture("../Images/pixil-frame-0 (12).png");
-	FoxStand2 = LoadTexture("../Images/pixil-frame-0 (13).png");
-	FoxStand3 = LoadTexture("../Images/pixil-frame-0 (14).png");
-	FoxWalk1 = LoadTexture("../Images/pixil-frame-0 (15).png");
-	FoxWalk2 = LoadTexture("../Images/pixil-frame-0 (16).png");
-	FoxWalk3 = LoadTexture("../Images/pixil-frame-0 (17).png");
+	FoxStand1 = LoadTexture("../Images/l0_Fox1.png");
+	FoxStand2 = LoadTexture("../Images/l0_Fox2.png");
+	FoxStand3 = LoadTexture("../Images/l0_Fox3.png");
+	FoxWalk1 = LoadTexture("../Images/l0_Fox4.png");
+	FoxWalk2 = LoadTexture("../Images/l0_Fox5.png");
+	FoxWalk3 = LoadTexture("../Images/l0_Fox6.png");
+	FoxWalk4 = LoadTexture("../Images/l0_Fox7.png");
 
-	FoxStand1flip = LoadTexture("../Images/pixil-frame-0 (18).png");
-	FoxStand2flip = LoadTexture("../Images/pixil-frame-0 (19).png");
-	FoxStand3flip = LoadTexture("../Images/pixil-frame-0 (20).png");
-	FoxWalk1flip = LoadTexture("../Images/pixil-frame-0 (21).png");
-	FoxWalk2flip = LoadTexture("../Images/pixil-frame-0 (22).png");
-	FoxWalk3flip = LoadTexture("../Images/pixil-frame-0 (23).png");
+	FoxStand1flip = LoadTexture("../Images/l0_Fox1Flip.png");
+	FoxStand2flip = LoadTexture("../Images/l0_Fox2Flip.png");
+	FoxStand3flip = LoadTexture("../Images/l0_Fox3Flip.png");
+	FoxWalk1flip = LoadTexture("../Images/l0_Fox4Flip.png");
+	FoxWalk2flip = LoadTexture("../Images/l0_Fox5Flip.png");
+	FoxWalk3flip = LoadTexture("../Images/l0_Fox6Flip.png");
+	FoxWalk4flip = LoadTexture("../Images/l0_Fox7Flip.png");
 
-	SetPosition({ 200, 200 });
+	SetPosition({ 760, 380 });
 	SetBehavior(nullptr);
 	SetFriction(8.0f);
 }
@@ -40,7 +42,6 @@ void Fox::Update(float deltaTime)
 
 	int y;
 	int timer = 1;
-	int itexture = +1;
 
 	switch (RandomTimer)
 	{
@@ -53,26 +54,29 @@ void Fox::Update(float deltaTime)
 		{
 		case 1:
 		{
+			if (textureState >= 4)
+				textureState = 1;
+
 			y = TimerSeconds().y;
 			if (y % 20 == 0)
 			{
-				if (textureState == 1)
+				switch (textureState)
 				{
+				case 1:
 					textureState++;
 					itexture = 1;
-				}
-				else if (textureState == 2)
-				{
+					break;
+				case 2:
 					textureState += itexture;
-				}
-				else if (textureState == 3)
-				{
+					break;
+				case 3:
 					textureState--;
 					itexture = -1;
+					break;
 				}
 			}
 
-			if (TimerSeconds().x >= 30)
+			if (TimerSeconds().x >= 2)
 			{
 				RandomTimer = 0;
 				CharacterState++;
@@ -96,6 +100,8 @@ void Fox::Update(float deltaTime)
 			{
 				int x = (rand() % 16) + 3;
 				int y = (rand() % 25) + 11;
+				//int x = (rand() % 54) + 49;
+				//int y = (rand() % 29) + 26;
 				for (auto& node : m_app->GetGraph()->GetNodes())
 				{
 					if ((node->data.x - 7) / 15 == x &&
@@ -105,6 +111,7 @@ void Fox::Update(float deltaTime)
 						// setting tempStart
 						tempStart = node;
 						found = true;
+						break;
 					}
 				}
 			}
@@ -126,14 +133,13 @@ void Fox::Update(float deltaTime)
 			else
 			{
 				y = TimerSeconds().y;
-				if (y % 10 == 0)
+				if (y % 8 == 0)
 				{
-					if (textureState == 2)
-						textureState = 3;
-					else if (textureState == 3)
-						textureState = 2;
-					else
-						textureState = 2;
+					textureState++;
+					if (textureState > 7)
+					{
+						textureState = 4;
+					}
 				}
 				break;
 			}
@@ -151,29 +157,33 @@ void Fox::Update(float deltaTime)
 
 void Fox::Draw()
 {
-	int textureoffset = -12;
+	int textureoffsetx = -16;
+	int textureoffsety = -16;
 
 	if (!textureflip)
 	{
 		switch (textureState)
 		{
 		case 1:
-			DrawTextureEx(FoxStand1, { m_position.x + textureoffset, m_position.y + textureoffset }, 0.0f, 1.75f, WHITE);
+			DrawTextureEx(FoxStand1, { m_position.x + textureoffsetx, m_position.y + textureoffsety }, 0.0f, 1.5f, WHITE);
 			break;
 		case 2:
-			DrawTextureEx(FoxStand2, { m_position.x + textureoffset, m_position.y + textureoffset }, 0.0f, 1.75f, WHITE);
+			DrawTextureEx(FoxStand2, { m_position.x + textureoffsetx, m_position.y + textureoffsety }, 0.0f, 1.5f, WHITE);
 			break;
 		case 3:
-			DrawTextureEx(FoxStand3, { m_position.x + textureoffset, m_position.y + textureoffset }, 0.0f, 1.75f, WHITE);
+			DrawTextureEx(FoxStand3, { m_position.x + textureoffsetx, m_position.y + textureoffsety }, 0.0f, 1.5f, WHITE);
 			break;
 		case 4:
-			DrawTextureEx(FoxWalk1, { m_position.x + textureoffset, m_position.y + textureoffset }, 0.0f, 1.75f, WHITE);
+			DrawTextureEx(FoxWalk1, { m_position.x + textureoffsetx, m_position.y + textureoffsety }, 0.0f, 1.5f, WHITE);
 			break;
 		case 5:
-			DrawTextureEx(FoxWalk2, { m_position.x + textureoffset, m_position.y + textureoffset }, 0.0f, 1.75f, WHITE);
+			DrawTextureEx(FoxWalk2, { m_position.x + textureoffsetx, m_position.y + textureoffsety }, 0.0f, 1.5f, WHITE);
 			break;
 		case 6:
-			DrawTextureEx(FoxWalk3, { m_position.x + textureoffset, m_position.y + textureoffset }, 0.0f, 1.75f, WHITE);
+			DrawTextureEx(FoxWalk3, { m_position.x + textureoffsetx, m_position.y + textureoffsety }, 0.0f, 1.5f, WHITE);
+			break;
+		case 7:
+			DrawTextureEx(FoxWalk4, { m_position.x + textureoffsetx, m_position.y + textureoffsety }, 0.0f, 1.5f, WHITE);
 			break;
 		}
 	}
@@ -182,23 +192,31 @@ void Fox::Draw()
 		switch (textureState)
 		{
 		case 1:
-			DrawTextureEx(FoxStand1, { m_position.x + textureoffset, m_position.y + textureoffset }, 0.0f, 1.75f, WHITE);
+			DrawTextureEx(FoxStand1flip, { m_position.x + textureoffsetx, m_position.y + textureoffsety }, 0.0f, 1.5f, WHITE);
 			break;
 		case 2:
-			DrawTextureEx(FoxStand2, { m_position.x + textureoffset, m_position.y + textureoffset }, 0.0f, 1.75f, WHITE);
+			DrawTextureEx(FoxStand2flip, { m_position.x + textureoffsetx, m_position.y + textureoffsety }, 0.0f, 1.5f, WHITE);
 			break;
 		case 3:
-			DrawTextureEx(FoxStand3, { m_position.x + textureoffset, m_position.y + textureoffset }, 0.0f, 1.75f, WHITE);
+			DrawTextureEx(FoxStand3flip, { m_position.x + textureoffsetx, m_position.y + textureoffsety }, 0.0f, 1.5f, WHITE);
 			break;
 		case 4:
-			DrawTextureEx(FoxWalk1, { m_position.x + textureoffset, m_position.y + textureoffset }, 0.0f, 1.75f, WHITE);
+			DrawTextureEx(FoxWalk1flip, { m_position.x + textureoffsetx, m_position.y + textureoffsety }, 0.0f, 1.5f, WHITE);
 			break;
 		case 5:
-			DrawTextureEx(FoxWalk2, { m_position.x + textureoffset, m_position.y + textureoffset }, 0.0f, 1.75f, WHITE);
+			DrawTextureEx(FoxWalk2flip, { m_position.x + textureoffsetx, m_position.y + textureoffsety }, 0.0f, 1.5f, WHITE);
 			break;
 		case 6:
-			DrawTextureEx(FoxWalk3, { m_position.x + textureoffset, m_position.y + textureoffset }, 0.0f, 1.75f, WHITE);
+			DrawTextureEx(FoxWalk3flip, { m_position.x + textureoffsetx, m_position.y + textureoffsety }, 0.0f, 1.5f, WHITE);
+			break;
+		case 7:
+			DrawTextureEx(FoxWalk4flip, { m_position.x + textureoffsetx, m_position.y + textureoffsety }, 0.0f, 1.5f, WHITE);
 			break;
 		}
+	}
+
+	if (m_app->GetDebug())
+	{
+		m_wanderBehavior->Draw(this);
 	}
 }

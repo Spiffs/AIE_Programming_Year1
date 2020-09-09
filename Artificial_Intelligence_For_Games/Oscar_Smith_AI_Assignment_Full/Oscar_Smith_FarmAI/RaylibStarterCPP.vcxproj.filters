@@ -45,6 +45,9 @@
     <ClCompile Include="Fox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FleeBehavior.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -78,6 +81,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Fox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FleeBehavior.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

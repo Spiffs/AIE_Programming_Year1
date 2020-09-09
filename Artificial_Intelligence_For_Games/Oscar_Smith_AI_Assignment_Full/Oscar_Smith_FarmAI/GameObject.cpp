@@ -36,15 +36,7 @@ void GameObject::Draw()
 
 void GameObject::ApplyForce(const Vector2& force)
 {
-    int max = 200;
-    Vector2 newForce = force;
-    if (newForce.x > max)
-        newForce.x = max;
-
-    if (newForce.y > max)
-        newForce.y = max;
-
-    m_acceleration = Vector2Add(m_acceleration, newForce);
+    m_acceleration = Vector2Add(m_acceleration, force);
 }
 
 const Vector2& GameObject::GetPosition() const

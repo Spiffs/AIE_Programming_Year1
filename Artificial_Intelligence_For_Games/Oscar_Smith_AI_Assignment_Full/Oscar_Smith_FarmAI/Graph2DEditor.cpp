@@ -38,6 +38,11 @@ void Graph2DEditor::Draw()
 			DrawCircle(node->data.x, node->data.y, 1, MAROON);
 			DrawCircleLines(node->data.x, node->data.y, 2, BROWN);
 			break;
+		case 3:
+			DrawCircle(node->data.x, node->data.y, 1, GREEN);
+			DrawCircleLines(node->data.x, node->data.y, 2, DARKGREEN);
+			break;
+
 		}
 
 	}
