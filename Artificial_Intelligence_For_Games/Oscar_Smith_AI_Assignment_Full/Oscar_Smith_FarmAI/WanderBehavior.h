@@ -4,8 +4,6 @@
 #include "Graph2D.h"
 #include <list>
 
-#include <functional>
-
 class WanderBehavior : public Behavior
 {
 public:

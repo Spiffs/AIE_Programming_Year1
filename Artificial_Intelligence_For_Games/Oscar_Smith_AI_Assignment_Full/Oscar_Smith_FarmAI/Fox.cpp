@@ -98,15 +98,13 @@ void Fox::Update(float deltaTime)
 			bool found = false;
 			while (!found)
 			{
-				int x = (rand() % 16) + 3;
-				int y = (rand() % 25) + 11;
-				//int x = (rand() % 54) + 49;
-				//int y = (rand() % 29) + 26;
+				int x = (rand() % 54) + 49;
+				int y = (rand() % 29) + 26;
 				for (auto& node : m_app->GetGraph()->GetNodes())
 				{
 					if ((node->data.x - 7) / 15 == x &&
 						(node->data.y - 7) / 15 == y &&
-						node->access == 2)
+						node->access == 3)
 					{
 						// setting tempStart
 						tempStart = node;
@@ -127,8 +125,13 @@ void Fox::Update(float deltaTime)
 		{
 			if (m_behavior == nullptr)
 			{
+				movesbeforechase++;
 				RandomTimer = 0;
 				CharacterState = 1;
+				if (movesbeforechase <= 5)
+				{
+
+				}
 			}
 			else
 			{
@@ -146,6 +149,9 @@ void Fox::Update(float deltaTime)
 		}
 		break;
 		}
+
+
+
 
 		if (m_velocity.x < 0)
 			textureflip = false;

@@ -169,6 +169,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="ChaseBehavior.cpp" />
     <ClCompile Include="Chicken.cpp" />
     <ClCompile Include="FleeBehavior.cpp" />
     <ClCompile Include="Fox.cpp" />
@@ -183,6 +184,7 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Behavior.h" />
+    <ClInclude Include="ChaseBehavior.h" />
     <ClInclude Include="Chicken.h" />
     <ClInclude Include="FleeBehavior.h" />
     <ClInclude Include="Fox.h" />

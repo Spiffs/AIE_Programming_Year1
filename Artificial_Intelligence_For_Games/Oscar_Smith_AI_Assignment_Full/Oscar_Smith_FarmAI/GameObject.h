@@ -15,7 +15,6 @@ public:
         float seconds = 0;
     };
 
-
     GameObject(Application *app);
     virtual ~GameObject();
 

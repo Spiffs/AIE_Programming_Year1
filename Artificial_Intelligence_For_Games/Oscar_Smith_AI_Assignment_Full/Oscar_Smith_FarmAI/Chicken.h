@@ -2,9 +2,8 @@
 #include "GameObject.h"
 #include "Behavior.h"
 #include "KeyboardBehavior.h"
-#include "SeekBehavior.h"
 #include "WanderBehavior.h"
-
+#include "FleeBehavior.h"
 
 class Chicken : public GameObject
 {
@@ -21,6 +20,7 @@ public:
 	void SetState(int state);
 
 protected:
+	// texture
 	Texture2D ChickenStand; // texture state 1
 	Texture2D ChickenWalk1; // texture state 2
 	Texture2D ChickenWalk2; // texture state 3
@@ -35,11 +35,14 @@ protected:
 	int textureState = 1;
 	bool textureflip = false;
 	
+	// behavior variables
 	int CharacterState = 1;
 	int RandomTimer = 0;
 
 	// behavior
 	WanderBehavior* m_wanderBehavior;
+	FleeBehavior* m_fleeBehavior;
 
+	float fleeDistance = 50.0f;
 };
 

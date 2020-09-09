@@ -1,6 +1,7 @@
 #include "WanderBehavior.h"
 #include "GameObject.h"
 #include "Graph2DEditor.h"
+#include <iostream>
 
 WanderBehavior::WanderBehavior()
 {
@@ -38,6 +39,7 @@ void WanderBehavior::Update(GameObject* obj, float deltaTime)
 	Vector2 heading = Vector2Add(obj->GetPosition(), obj->GetVelocity());
 	float headingLen = Vector2Length(heading);
 
+	// target direction in terms of 1 = NSEW is dirToTarget
 	Vector2 dirToTarget = Vector2Normalize(Vector2Subtract(m_target, obj->GetPosition()));
 	Vector2 vecToTarget = Vector2Scale(dirToTarget, headingLen);
 

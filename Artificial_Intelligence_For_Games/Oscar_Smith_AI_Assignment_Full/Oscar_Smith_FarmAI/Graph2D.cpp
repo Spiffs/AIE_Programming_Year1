@@ -23,6 +23,24 @@ void Graph2D::GetNearbyNodes(Vector2 position, float radius, std::vector<Graph2D
 	}
 }
 
+Graph2D::Node* Graph2D::GetClosestNode(Vector2 position)
+{
+	float radius = 15.0f;
+	bool found = false;
+	while (!found)
+	{
+		for (auto node : m_nodes)
+		{
+			float dist = Vector2Distance(position, node->data);
+			if (dist < radius)
+			{
+				return node;
+			}
+		}
+		radius += 15.0f;
+	}
+
+}
 
 Graph2D::Node* Graph2D::FindNodePos(Vector2 pos)
 {

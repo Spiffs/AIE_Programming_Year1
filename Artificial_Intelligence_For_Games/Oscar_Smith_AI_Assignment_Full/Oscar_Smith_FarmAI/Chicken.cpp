@@ -1,10 +1,13 @@
 #include "Chicken.h"
 #include "Application.h"
 
+
 Chicken::Chicken(Application* app) : GameObject(app)
 {
 	m_wanderBehavior = new WanderBehavior();
 	m_wanderBehavior->SetTargetRadius(12.0f);
+	m_fleeBehavior = new FleeBehavior(m_app);
+
 }
 
 Chicken::~Chicken()
@@ -150,7 +153,7 @@ void Chicken::Update(float deltaTime)
 		}
 		case 5:
 		{
-			if (m_behavior == nullptr) 
+			if (m_behavior == nullptr)
 			{
 				RandomTimer = 0;
 				CharacterState = 1;
@@ -171,6 +174,40 @@ void Chicken::Update(float deltaTime)
 			}
 		}
 		break;
+		// animate while running from fox
+		case 6:
+			if (m_behavior == nullptr)
+			{
+				if (Vector2Distance(m_app->GetFoxPos(), m_position) < fleeDistance)
+				{
+					SetBehavior(m_fleeBehavior);
+					break;
+				}
+
+				RandomTimer = 0;
+				CharacterState = 1;
+			}
+			else
+			{
+				y = TimerSeconds().y;
+				if (y % 10 == 0)
+				{
+					if (textureState == 2)
+						textureState = 3;
+					else if (textureState == 3)
+						textureState = 2;
+					else
+						textureState = 2;
+				}
+				break;
+			}
+		}
+		break;
+
+		if (Vector2Distance(m_app->GetFoxPos(), m_position) < fleeDistance)
+		{
+			SetBehavior(m_fleeBehavior);
+			CharacterState = 6;
 		}
 
 		if (m_velocity.x < 0)
@@ -178,6 +215,7 @@ void Chicken::Update(float deltaTime)
 		else
 			textureflip = true;
 	}
+
 }
 
 void Chicken::Draw()

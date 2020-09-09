@@ -16,6 +16,7 @@ public:
     virtual ~Graph2D();
 
     void GetNearbyNodes(Vector2 position, float radius, std::vector<Graph2D::Node*>& out_nodes);
+    Node* GetClosestNode(Vector2 position);
 
     void SetAccess(std::vector<int> graph);
     bool pfstackcheck(std::list<PFNode*>& aList, Node* aNode);

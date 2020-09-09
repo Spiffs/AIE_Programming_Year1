@@ -2,8 +2,8 @@
 #include "GameObject.h"
 #include "Behavior.h"
 #include "KeyboardBehavior.h"
-#include "SeekBehavior.h"
 #include "WanderBehavior.h"
+#include "ChaseBehavior.h"
 
 class Fox : public GameObject
 {
@@ -38,7 +38,12 @@ protected:
 	int RandomTimer = 0;
 	int CharacterState = 1;
 	int itexture = 0;
+	int movesbeforechase = 0;
 
 	WanderBehavior* m_wanderBehavior;
+	ChaseBehavior* m_chaseBehavior;
+	
+
+
 };
 

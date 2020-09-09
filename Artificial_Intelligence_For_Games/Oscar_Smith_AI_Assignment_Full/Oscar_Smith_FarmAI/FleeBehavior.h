@@ -1,15 +1,15 @@
 #pragma once
 #include "Behavior.h"
 #include "raymath.h"
+#include "Graph2D.h"
+#include <list>
 
-#include <functional>
-
-class SeekBehavior : public Behavior
+class FleeBehavior : public Behavior
 {
 public:
 
-	SeekBehavior();
-	virtual ~SeekBehavior();
+	FleeBehavior(Application* app);
+	virtual ~FleeBehavior();
 
 	virtual void Update(GameObject* obj, float deltaTime);
 	virtual void Draw(GameObject* obj);
@@ -17,17 +17,19 @@ public:
 	const Vector2& GetTarget() const;
 	void SetTarget(const Vector2& target);
 
-	const float& GetTargetRadius() const;
 	void SetTargetRadius(const float& radius);
+	const float& GetTargetRadius() const;
 
-	void OnArrive(std::function<void()> callback);
+	void SetPath(std::list<Graph2D::Node*> path);
 
 protected:
 
+	std::list<Graph2D::Node*> m_path;
+	float m_targetRadius = 5.0f;
+	float m_fleeRadius = 50.0f;
 	Vector2 m_target;
-	float m_targetRadius = 1.0f;
+	int behaviorSwitch = 1;
 
-	std::function<void()> m_onArriveFn;
-
+	Application* m_app;
 };
 
