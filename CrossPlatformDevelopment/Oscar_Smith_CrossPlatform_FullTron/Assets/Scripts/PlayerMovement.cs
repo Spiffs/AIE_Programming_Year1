@@ -6,27 +6,34 @@ public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody rb;
 
+    public float acceleration = 0.1f;
     public float moveSpeed = 1f;
     public float turnSpeed = 2f;
-    // Update is called once per frame
+
+    public float speed;
+    private Vector3 lastposition;
+
+    private void FixedUpdate()
+    {
+
+    }
+
     void Update()
     {
-        // AddForce FORWARD
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
+
+        if (vertical == 0f) { acceleration = Mathf.SmoothStep(acceleration, 0f, .1f); }
+        else { acceleration = Mathf.SmoothStep(acceleration, 1f, .03f); }
         
-        Vector3 force = moveSpeed * vertical * transform.forward;
 
-        if (rb.velocity.magnitude > 15)
+        if (acceleration > .1f)
         {
-            rb.velocity = rb.velocity.normalized * 15;
+            transform.Rotate(Vector3.up * Time.deltaTime, horizontal / acceleration);
         }
 
-        rb.AddForce(force, ForceMode.Acceleration);
-
-        if (rb.velocity.magnitude > 1)
-        {
-            rb.AddTorque(transform.up * turnSpeed * horizontal * (25 - rb.velocity.magnitude));
-        }
+        transform.Translate((Vector3.forward * Time.deltaTime * moveSpeed * vertical) * acceleration);
     }
+
+
 }

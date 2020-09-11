@@ -20,7 +20,6 @@ public class Platform : MonoBehaviour
 
     public void PlatformActive()
     {
-        Debug.Log("yeh");
         Move = true;
     }
 
@@ -35,9 +34,13 @@ public class Platform : MonoBehaviour
         {
             mounted = true;
         }
-        else
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.collider.tag == "Player")
         {
-            mounted = false;
+            mounted = true;
         }
     }
 
@@ -47,10 +50,10 @@ public class Platform : MonoBehaviour
         Vector3 move = new Vector3(1 * mod, 0, 1 * -mod);
         if (Move && !pause)
         {
-            transform.position += move * Time.deltaTime;
+            transform.position += move * speed * Time.deltaTime;
             if (mounted)
             {
-                player.transform.position += move * Time.deltaTime;
+                player.transform.position += move * speed * Time.deltaTime;
             }
         }
 
@@ -64,5 +67,6 @@ public class Platform : MonoBehaviour
                 Move = true;
             }
         }
+        
     }
 }

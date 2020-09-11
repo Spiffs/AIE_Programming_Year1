@@ -87,6 +87,9 @@
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/s192134/Desktop/Programming_Year1/CrossPlatformDevelopment/Oscar_Smith_CrossPlatform_FullTron/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Cinemachine">
+      <HintPath>C:/Users/s192134/Desktop/Programming_Year1/CrossPlatformDevelopment/Oscar_Smith_CrossPlatform_FullTron/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>C:/Users/s192134/Desktop/Programming_Year1/CrossPlatformDevelopment/Oscar_Smith_CrossPlatform_FullTron/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
@@ -105,17 +108,14 @@
     <Reference Include="Unity.Rider.Editor">
       <HintPath>C:/Users/s192134/Desktop/Programming_Year1/CrossPlatformDevelopment/Oscar_Smith_CrossPlatform_FullTron/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="com.unity.cinemachine.editor">
+      <HintPath>C:/Users/s192134/Desktop/Programming_Year1/CrossPlatformDevelopment/Oscar_Smith_CrossPlatform_FullTron/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>C:/Users/s192134/Desktop/Programming_Year1/CrossPlatformDevelopment/Oscar_Smith_CrossPlatform_FullTron/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>C:/Users/s192134/Desktop/Programming_Year1/CrossPlatformDevelopment/Oscar_Smith_CrossPlatform_FullTron/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Cinemachine">
-      <HintPath>C:/Users/s192134/Desktop/Programming_Year1/CrossPlatformDevelopment/Oscar_Smith_CrossPlatform_FullTron/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
-    </Reference>
-    <Reference Include="com.unity.cinemachine.editor">
-      <HintPath>C:/Users/s192134/Desktop/Programming_Year1/CrossPlatformDevelopment/Oscar_Smith_CrossPlatform_FullTron/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity 2019.3.6f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

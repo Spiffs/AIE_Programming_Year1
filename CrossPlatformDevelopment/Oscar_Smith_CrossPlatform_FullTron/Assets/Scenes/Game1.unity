@@ -498,8 +498,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 298302771}
-  moveSpeed: 3
-  turnSpeed: 0.1
+  acceleration: 0.1
+  moveSpeed: 20
+  turnSpeed: 0.02
+  speed: 0
 --- !u!54 &298302771
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -977,7 +979,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1115289980}
-  m_LocalRotation: {x: 0.09142144, y: -0.6560457, z: 0.080524646, w: 0.74482346}
+  m_LocalRotation: {x: 0.09142143, y: -0.65604573, z: 0.08052465, w: 0.7448234}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
