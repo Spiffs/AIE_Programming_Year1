@@ -1,8 +1,8 @@
 #pragma once
 #include "Behavior.h"
 #include "raymath.h"
-
-#include <functional>
+#include "Graph2D.h"
+#include <list>
 
 class ChaseBehavior : public Behavior
 {
@@ -17,17 +17,16 @@ public:
 	const Vector2& GetTarget() const;
 	void SetTarget(const Vector2& target);
 
-	const float& GetTargetRadius() const;
 	void SetTargetRadius(const float& radius);
+	const float& GetTargetRadius() const;
 
-	void OnArrive(std::function<void()> callback);
+	void SetPath(std::list<Graph2D::Node*> path);
 
 protected:
 
+	std::list<Graph2D::Node*> m_path;
+	float m_targetRadius = 5.0f;
 	Vector2 m_target;
-	float m_targetRadius = 1.0f;
-
-	std::function<void()> m_onArriveFn;
 
 };
 

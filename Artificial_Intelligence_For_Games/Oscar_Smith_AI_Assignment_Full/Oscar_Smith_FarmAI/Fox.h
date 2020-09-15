@@ -42,8 +42,5 @@ protected:
 
 	WanderBehavior* m_wanderBehavior;
 	ChaseBehavior* m_chaseBehavior;
-	
-
-
 };
 

@@ -18,9 +18,14 @@ void FleeBehavior::SetPath(std::list<Graph2D::Node*> path)
 	m_path = path;
 }
 
+void FleeBehavior::SetBehaviorSwitch(int i)
+{
+	behaviorSwitch = i;
+}
+
 void FleeBehavior::Update(GameObject* obj, float deltaTime)
 {
-	Vector2 dirToTarget;
+	Vector2 dirToTarget = { 0, 0 };
 	switch (behaviorSwitch)
 	{
 		// setpath 
@@ -28,40 +33,42 @@ void FleeBehavior::Update(GameObject* obj, float deltaTime)
 	{
 		// direction to target replacement::
 		dirToTarget = Vector2MultiplyV(Vector2Normalize(Vector2Subtract(m_target, obj->GetPosition())), { -1.0f, -1.0f });
-		Vector2 fleeTarget = { dirToTarget.x + m_fleeRadius, dirToTarget.y + m_fleeRadius };
+		Vector2 fleeTarget = { obj->GetPosition().x + (dirToTarget.x * m_fleeRadius), obj->GetPosition().y + (dirToTarget.y * m_fleeRadius) };
 
 		//______________________________________________________________________________
-		std::vector<Graph2D::Node*> tempVector;
-		m_app->GetGraph()->GetNearbyNodes({ obj->GetPosition().x, obj->GetPosition().y }, 15, tempVector);
-		// setting tempEnd
-		Graph2D::Node* tempEnd = tempVector.back();
-		Graph2D::Node* tempStart;
-		bool found = false;
-		// find node at Vector2 point
-		while (!found)
+			// chicken pos
+		std::vector<Graph2D::Node*> tempVectorstart;
+		    // destination pos
+		std::vector<Graph2D::Node*> tempVectorend;
+
+		// loop through adding to the radius until found
+		int radius = 15;
+		while (tempVectorstart.size() == 0)
 		{
-			for (auto& node : m_app->GetGraph()->GetNodes())
-			{
-				if ((node->data.x - 7) / 15 == fleeTarget.x &&
-					(node->data.y - 7) / 15 == fleeTarget.y &&
-					node->access == 2)
-				{
-					// setting tempStart
-					tempStart = node;
-					found = true;
-					break;
-				}
-			}
+			m_app->GetGraph()->GetNearbyNodes(obj->GetPosition(), radius, tempVectorstart);
+			radius += 15;
 		}
+		radius = 15;
+
+		// destination
+		while (tempVectorend.size() == 0)
+		{
+			m_app->GetGraph()->GetNearbyNodes(fleeTarget, radius, tempVectorend);
+			radius += 15;
+		}
+
+		// setting temps
+		Graph2D::Node* tempEnd = tempVectorstart.back();
+		Graph2D::Node* tempStart = tempVectorend.back();
 
 		//________________________________________________________________________________
 
 		// find path
-		m_app->GetGraph()->PathFind(tempStart, tempEnd);
+		SetPath(m_app->GetGraph()->PathFind(tempStart, tempEnd));
 		behaviorSwitch++;
 		break;
 	}
-	// 
+	// follow path
 	case 2:
 	{
 		if (!m_path.empty())
@@ -84,7 +91,7 @@ void FleeBehavior::Update(GameObject* obj, float deltaTime)
 		float headingLen = Vector2Length(heading);
 
 		// target direction in terms of 1 = NSEW is dirToTarget
-		//dirToTarget = Vector2Normalize(Vector2Subtract(m_target, obj->GetPosition()));					reversement to dirtotarget above		HAXXOR
+		dirToTarget = Vector2Normalize(Vector2Subtract(m_target, obj->GetPosition()));
 		Vector2 vecToTarget = Vector2Scale(dirToTarget, headingLen);
 
 		Vector2 targetForcePos = Vector2Add(vecToTarget, obj->GetPosition());
@@ -100,8 +107,8 @@ void FleeBehavior::Draw(GameObject* obj)
 {
 	for (auto node : m_path)
 	{
-		DrawCircle(node->data.x, node->data.y, 2, GREEN);
-		DrawCircleLines(node->data.x, node->data.y, 3, GRAY);
+		DrawCircle(node->data.x, node->data.y, 4, SKYBLUE);
+		DrawCircleLines(node->data.x, node->data.y, 5, BLUE);
 	}
 }
 

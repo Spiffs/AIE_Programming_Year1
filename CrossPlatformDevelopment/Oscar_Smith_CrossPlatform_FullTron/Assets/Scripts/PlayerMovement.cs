@@ -29,11 +29,9 @@ public class PlayerMovement : MonoBehaviour
 
         if (acceleration > .1f)
         {
-            transform.Rotate(Vector3.up * Time.deltaTime, horizontal / acceleration);
+            transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed, horizontal / acceleration);
         }
 
         transform.Translate((Vector3.forward * Time.deltaTime * moveSpeed * vertical) * acceleration);
     }
-
-
 }

@@ -1,15 +1,18 @@
 #include "Fox.h"
 #include "Application.h"
+#include "Chicken.h"
 
 Fox::Fox(Application* app) : GameObject(app)
 {
 	m_wanderBehavior = new WanderBehavior();
 	m_wanderBehavior->SetTargetRadius(12.0f);
+	m_chaseBehavior = new ChaseBehavior();
 }
 Fox::~Fox()
 {
 	SetBehavior(nullptr);
 	delete m_wanderBehavior;
+	delete m_chaseBehavior;
 }
 
 void Fox::Load()
@@ -41,6 +44,7 @@ void Fox::Update(float deltaTime)
 	Timer();
 
 	int y;
+	int x;
 	int timer = 1;
 
 	switch (RandomTimer)
@@ -128,9 +132,10 @@ void Fox::Update(float deltaTime)
 				movesbeforechase++;
 				RandomTimer = 0;
 				CharacterState = 1;
-				if (movesbeforechase <= 5)
+				if (movesbeforechase >= 5)
 				{
-
+					movesbeforechase = 0;
+					CharacterState = 4;
 				}
 			}
 			else
@@ -148,18 +153,43 @@ void Fox::Update(float deltaTime)
 			}
 		}
 		break;
+		case 4:
+		{
+			SetBehavior(m_chaseBehavior);
+
+			y = TimerSeconds().y;
+			if (y % 30 == 0)
+			{
+				Chicken* tempChicki = GetApp()->ClosestToChicken();
+				m_chaseBehavior->SetTarget(tempChicki->GetPosition());
+			}
+			else if (TimerSeconds().x > 20)
+			{
+				ResetTimer();
+				CharacterState = 1;
+			}
+
+			y = TimerSeconds().y;
+			if (y % 8 == 0)
+			{
+				textureState++;
+				if (textureState > 7)
+				{
+					textureState = 4;
+				}
+			}
 		}
-
-
-
-
-		if (m_velocity.x < 0)
-			textureflip = false;
-		else
-			textureflip = true;
+		break;
+		}
 	}
 
+	if (m_velocity.x < 0)
+		textureflip = false;
+	else
+		textureflip = true;
 }
+
+
 
 void Fox::Draw()
 {

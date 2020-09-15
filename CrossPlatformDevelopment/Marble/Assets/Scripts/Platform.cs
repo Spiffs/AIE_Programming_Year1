@@ -34,15 +34,19 @@ public class Platform : MonoBehaviour
         {
             mounted = true;
         }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.collider.tag == "Player")
+        else
         {
-            mounted = true;
+            mounted = false;
         }
     }
+
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    if (collision.collider.tag == "Player")
+    //    {
+    //        mounted = true;
+    //    }
+    //}
 
     // Update is called once per frame
     void Update()

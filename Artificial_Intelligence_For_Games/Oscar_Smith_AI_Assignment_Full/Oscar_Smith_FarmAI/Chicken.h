@@ -43,6 +43,6 @@ protected:
 	WanderBehavior* m_wanderBehavior;
 	FleeBehavior* m_fleeBehavior;
 
-	float fleeDistance = 50.0f;
+	float fleeDistance = 80.0f;
 };
 

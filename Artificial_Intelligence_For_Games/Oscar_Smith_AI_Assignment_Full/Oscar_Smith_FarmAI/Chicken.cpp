@@ -1,6 +1,6 @@
 #include "Chicken.h"
 #include "Application.h"
-
+#include <iostream>
 
 Chicken::Chicken(Application* app) : GameObject(app)
 {
@@ -14,6 +14,7 @@ Chicken::~Chicken()
 {
 	SetBehavior(nullptr);
 	delete m_wanderBehavior;
+	delete m_fleeBehavior;
 }
 
 void Chicken::Load()
@@ -71,6 +72,7 @@ void Chicken::Update(float deltaTime)
 		{
 		case 0:
 		{
+			CharacterState = 1;
 			break;
 		}
 		case 1:
@@ -178,10 +180,16 @@ void Chicken::Update(float deltaTime)
 		case 6:
 			if (m_behavior == nullptr)
 			{
-				if (Vector2Distance(m_app->GetFoxPos(), m_position) < fleeDistance)
+				if (Vector2Distance(m_app	->GetFoxPos(), m_position) > fleeDistance)
 				{
-					SetBehavior(m_fleeBehavior);
+
+					CharacterState = 1;
+					m_fleeBehavior->SetBehaviorSwitch(1);
 					break;
+				}
+				else
+				{
+					m_fleeBehavior->SetBehaviorSwitch(1);
 				}
 
 				RandomTimer = 0;
@@ -203,19 +211,19 @@ void Chicken::Update(float deltaTime)
 			}
 		}
 		break;
-
-		if (Vector2Distance(m_app->GetFoxPos(), m_position) < fleeDistance)
-		{
-			SetBehavior(m_fleeBehavior);
-			CharacterState = 6;
-		}
-
-		if (m_velocity.x < 0)
-			textureflip = false;
-		else
-			textureflip = true;
 	}
 
+	if (m_velocity.x < 0)
+		textureflip = false;
+	else
+		textureflip = true;
+
+	if (Vector2Distance(m_app->GetFoxPos(), m_position) < fleeDistance)
+	{
+		SetBehavior(m_fleeBehavior);
+
+		CharacterState = 6;
+	}
 }
 
 void Chicken::Draw()

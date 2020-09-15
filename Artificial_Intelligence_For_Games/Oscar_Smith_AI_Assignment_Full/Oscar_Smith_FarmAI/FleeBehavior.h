@@ -21,11 +21,12 @@ public:
 	const float& GetTargetRadius() const;
 
 	void SetPath(std::list<Graph2D::Node*> path);
+	void SetBehaviorSwitch(int i);
 
 protected:
 
 	std::list<Graph2D::Node*> m_path;
-	float m_targetRadius = 5.0f;
+	float m_targetRadius = 8.0f;
 	float m_fleeRadius = 50.0f;
 	Vector2 m_target;
 	int behaviorSwitch = 1;

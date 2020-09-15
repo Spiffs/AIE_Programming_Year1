@@ -169,6 +169,8 @@ void Application::Draw()
 	if (debug)
 		m_graphEditor->Draw();
 
+
+
 	chicken1->Draw();
 	chicken2->Draw();
 	chicken3->Draw();
@@ -197,6 +199,7 @@ Vector2 Application::GetFoxPos()
 {
 	return fox->GetPosition();
 }
+
 
 Vector2 Application::GetChickenPos(int chicken)
 {
