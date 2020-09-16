@@ -16,6 +16,7 @@ public:
 	virtual void Update(float deltaTime);
 	virtual void Draw();
 
+	void PathFind();
 protected:
 	Texture2D FoxStand1;
 	Texture2D FoxStand2;

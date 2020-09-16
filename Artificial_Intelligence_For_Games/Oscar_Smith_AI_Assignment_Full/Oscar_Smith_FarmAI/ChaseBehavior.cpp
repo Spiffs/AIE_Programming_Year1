@@ -3,9 +3,9 @@
 #include "Graph2DEditor.h"
 #include <iostream>
 
-ChaseBehavior::ChaseBehavior()
+ChaseBehavior::ChaseBehavior(Application* a_app)
 {
-
+	m_app = a_app;
 }
 
 ChaseBehavior::~ChaseBehavior()
@@ -37,16 +37,9 @@ void ChaseBehavior::Update(GameObject* obj, float deltaTime)
 	}
 
 	Vector2 heading = Vector2Add(obj->GetPosition(), obj->GetVelocity());
-	float headingLen = Vector2Length(heading);
+	Vector2 dirToTarget = Vector2Normalize(Vector2Subtract(m_target, obj->GetPosition()) );
 
-	// target direction in terms of 1 = NSEW is dirToTarget
-	Vector2 dirToTarget = Vector2Normalize(Vector2Subtract(m_target, obj->GetPosition()));
-	Vector2 vecToTarget = Vector2Scale(dirToTarget, headingLen);
-
-	Vector2 targetForcePos = Vector2Add(vecToTarget, obj->GetPosition());
-	Vector2 forceDir = Vector2Subtract(targetForcePos, heading);
-
-	obj->ApplyForce(forceDir);
+	obj->ApplyForce(Vector2Scale(dirToTarget, maxSpeed));
 
 }
 

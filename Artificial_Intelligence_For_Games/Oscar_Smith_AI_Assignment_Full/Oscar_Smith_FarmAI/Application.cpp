@@ -40,7 +40,7 @@ void Application::Load()
 	std::vector<int> accessmap{
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,	
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -102,7 +102,7 @@ void Application::Load()
 	chicken2->Load();
 	chicken3->Load();
 	chicken4->Load();
-	
+
 	fox = new Fox(this);
 	fox->Load();
 
@@ -167,15 +167,26 @@ void Application::Draw()
 	DrawTextureEx(m_background, { 0, 0 }, 0.0f, 1.0f, WHITE);
 
 	if (debug)
+	{
 		m_graphEditor->Draw();
+		chicken1->GameObject::Draw();
+		chicken2->GameObject::Draw();
+		chicken3->GameObject::Draw();
+		chicken4->GameObject::Draw();
 
-
+		DrawCircleLines(chicken1->GetPosition().x, chicken1->GetPosition().y, 80.0f, RED);
+		DrawCircleLines(chicken2->GetPosition().x, chicken2->GetPosition().y, 80.0f, RED);
+		DrawCircleLines(chicken3->GetPosition().x, chicken3->GetPosition().y, 80.0f, RED);
+		DrawCircleLines(chicken4->GetPosition().x, chicken4->GetPosition().y, 80.0f, RED);
+		
+		fox->GameObject::Draw();
+	}
 
 	chicken1->Draw();
 	chicken2->Draw();
 	chicken3->Draw();
 	chicken4->Draw();
-
+	
 	fox->Draw();
 
 	EndDrawing();
@@ -191,7 +202,7 @@ Chicken* Application::ClosestToChicken()
 		tempchicken = chicken3;
 	if (Vector2Distance(GetFoxPos(), tempchicken->GetPosition()) > Vector2Distance(GetFoxPos(), GetChickenPos(4)))
 		tempchicken = chicken4;
-	 
+
 	return tempchicken;
 }
 

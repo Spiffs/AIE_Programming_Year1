@@ -28,5 +28,6 @@ protected:
 	float m_targetRadius = 5.0f;
 	Vector2 m_target;
 
+	float maxSpeed = 300.0f;
 };
 

@@ -118,11 +118,13 @@ void Chicken::Update(float deltaTime)
 		}
 		case 4:
 		{
+				// this
 			Graph2D::Node* tempEnd = nullptr;
+				// destination
 			Graph2D::Node* tempStart = nullptr;
 
 			std::vector<Graph2D::Node*> tempVector;
-			m_app->GetGraph()->GetNearbyNodes({ m_position.x, m_position.y }, 15, tempVector);
+			m_app->GetGraph()->GetNearbyNodes(GetPosition(), 15, tempVector);
 
 			// setting tempEnd
 			tempEnd = tempVector.back();
@@ -180,7 +182,7 @@ void Chicken::Update(float deltaTime)
 		case 6:
 			if (m_behavior == nullptr)
 			{
-				if (Vector2Distance(m_app	->GetFoxPos(), m_position) > fleeDistance)
+				if (Vector2Distance(m_app->GetFoxPos(), m_position) > fleeDistance)
 				{
 
 					CharacterState = 1;
@@ -207,6 +209,10 @@ void Chicken::Update(float deltaTime)
 					else
 						textureState = 2;
 				}
+				else if (y % 30 == 0)
+				{
+					m_fleeBehavior->SetBehaviorSwitch(1);
+				}	
 				break;
 			}
 		}
@@ -228,7 +234,7 @@ void Chicken::Update(float deltaTime)
 
 void Chicken::Draw()
 {
-	int textureoffset = -12;
+	int textureoffset = -14;
 
 	if (!textureflip)
 	{

@@ -32,13 +32,14 @@ void FleeBehavior::Update(GameObject* obj, float deltaTime)
 	case 1:
 	{
 		// direction to target replacement::
-		dirToTarget = Vector2MultiplyV(Vector2Normalize(Vector2Subtract(m_target, obj->GetPosition())), { -1.0f, -1.0f });
-		Vector2 fleeTarget = { obj->GetPosition().x + (dirToTarget.x * m_fleeRadius), obj->GetPosition().y + (dirToTarget.y * m_fleeRadius) };
+		dirToTarget = Vector2MultiplyV(Vector2Normalize(Vector2Subtract(m_app->GetFoxPos(), obj->GetPosition())), { -1.0f, -1.0f });
+		Vector2 fleeTarget = { obj->GetPosition().x + (dirToTarget.x * m_fleeRadius), 
+							   obj->GetPosition().y + (dirToTarget.y * m_fleeRadius) };
 
 		//______________________________________________________________________________
-			// chicken pos
+			// destination pos
 		std::vector<Graph2D::Node*> tempVectorstart;
-		    // destination pos
+		    // this pos
 		std::vector<Graph2D::Node*> tempVectorend;
 
 		// loop through adding to the radius until found
@@ -58,8 +59,8 @@ void FleeBehavior::Update(GameObject* obj, float deltaTime)
 		}
 
 		// setting temps
-		Graph2D::Node* tempEnd = tempVectorstart.back();
-		Graph2D::Node* tempStart = tempVectorend.back();
+		Graph2D::Node* tempEnd = tempVectorstart.front();
+		Graph2D::Node* tempStart = tempVectorend.front();
 
 		//________________________________________________________________________________
 
@@ -88,16 +89,9 @@ void FleeBehavior::Update(GameObject* obj, float deltaTime)
 		}
 
 		Vector2 heading = Vector2Add(obj->GetPosition(), obj->GetVelocity());
-		float headingLen = Vector2Length(heading);
-
-		// target direction in terms of 1 = NSEW is dirToTarget
 		dirToTarget = Vector2Normalize(Vector2Subtract(m_target, obj->GetPosition()));
-		Vector2 vecToTarget = Vector2Scale(dirToTarget, headingLen);
 
-		Vector2 targetForcePos = Vector2Add(vecToTarget, obj->GetPosition());
-		Vector2 forceDir = Vector2Subtract(targetForcePos, heading);
-
-		obj->ApplyForce(forceDir);
+		obj->ApplyForce(Vector2Scale(dirToTarget, maxSpeed));
 		break;
 	}
 	}
@@ -107,8 +101,8 @@ void FleeBehavior::Draw(GameObject* obj)
 {
 	for (auto node : m_path)
 	{
-		DrawCircle(node->data.x, node->data.y, 4, SKYBLUE);
-		DrawCircleLines(node->data.x, node->data.y, 5, BLUE);
+		DrawCircle(node->data.x, node->data.y, 2, SKYBLUE);
+		DrawCircleLines(node->data.x, node->data.y, 3, BLUE);
 	}
 }
 

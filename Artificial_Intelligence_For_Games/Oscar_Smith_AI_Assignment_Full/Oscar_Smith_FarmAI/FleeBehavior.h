@@ -26,10 +26,12 @@ public:
 protected:
 
 	std::list<Graph2D::Node*> m_path;
-	float m_targetRadius = 8.0f;
-	float m_fleeRadius = 50.0f;
+	float m_targetRadius = 12.0f;
+	float m_fleeRadius = 80.0f;
 	Vector2 m_target;
 	int behaviorSwitch = 1;
+
+	float maxSpeed = 500.0f;
 
 	Application* m_app;
 };

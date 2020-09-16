@@ -33,9 +33,6 @@
     <ClCompile Include="Chicken.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SeekBehavior.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="WanderBehavior.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -72,9 +69,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Chicken.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SeekBehavior.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WanderBehavior.h">

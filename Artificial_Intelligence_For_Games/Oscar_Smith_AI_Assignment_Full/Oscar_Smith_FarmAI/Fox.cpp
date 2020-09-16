@@ -6,7 +6,7 @@ Fox::Fox(Application* app) : GameObject(app)
 {
 	m_wanderBehavior = new WanderBehavior();
 	m_wanderBehavior->SetTargetRadius(12.0f);
-	m_chaseBehavior = new ChaseBehavior();
+	m_chaseBehavior = new ChaseBehavior(m_app);
 }
 Fox::~Fox()
 {
@@ -135,7 +135,7 @@ void Fox::Update(float deltaTime)
 				if (movesbeforechase >= 5)
 				{
 					movesbeforechase = 0;
-					CharacterState = 4;
+					CharacterState = 5;
 				}
 			}
 			else
@@ -155,13 +155,10 @@ void Fox::Update(float deltaTime)
 		break;
 		case 4:
 		{
-			SetBehavior(m_chaseBehavior);
-
-			y = TimerSeconds().y;
-			if (y % 30 == 0)
+			if (m_behavior == nullptr)
 			{
-				Chicken* tempChicki = GetApp()->ClosestToChicken();
-				m_chaseBehavior->SetTarget(tempChicki->GetPosition());
+				PathFind();
+				SetBehavior(m_chaseBehavior);
 			}
 			else if (TimerSeconds().x > 20)
 			{
@@ -180,6 +177,13 @@ void Fox::Update(float deltaTime)
 			}
 		}
 		break;
+		case 5:
+		{
+			SetBehavior(m_chaseBehavior);
+			PathFind();
+			CharacterState = 4;
+			break;
+		}
 		}
 	}
 
@@ -189,11 +193,34 @@ void Fox::Update(float deltaTime)
 		textureflip = true;
 }
 
+void Fox::PathFind()
+{
+	// destination
+	std::vector<Graph2D::Node*> tempVectorstart;
+	// this
+	std::vector<Graph2D::Node*> tempVectorend;
 
+	int radius = 15;
+	while (tempVectorstart.size() == 0)
+	{
+		m_app->GetGraph()->GetNearbyNodes(GetApp()->ClosestToChicken()->GetPosition(), radius, tempVectorstart);
+		radius += 15;
+	}
+	radius = 15;
+
+	// destination
+	while (tempVectorend.size() == 0)
+	{
+		m_app->GetGraph()->GetNearbyNodes(GetPosition(), radius, tempVectorend);
+		radius += 15;
+	}
+
+	m_chaseBehavior->SetPath(GetApp()->GetGraph()->PathFind(tempVectorstart.front(), tempVectorend.front()));
+}
 
 void Fox::Draw()
 {
-	int textureoffsetx = -16;
+	int textureoffsetx = -24;
 	int textureoffsety = -16;
 
 	if (!textureflip)
@@ -249,10 +276,5 @@ void Fox::Draw()
 			DrawTextureEx(FoxWalk4flip, { m_position.x + textureoffsetx, m_position.y + textureoffsety }, 0.0f, 1.5f, WHITE);
 			break;
 		}
-	}
-
-	if (m_app->GetDebug())
-	{
-		m_wanderBehavior->Draw(this);
 	}
 }
