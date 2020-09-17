@@ -8,12 +8,12 @@ public class Platform : MonoBehaviour
 {
     private bool pause = false;
     private bool Move = false;
-    private bool mounted = false;
     int mod = -1;
     public float speed;
     private float timerpreset = 2.0f;
     private float timer = 2.0f;
     public GameObject player;
+    public int collisionCount = 0;
 
     // Start is called before the first frame update
     void Start() { }
@@ -32,21 +32,17 @@ public class Platform : MonoBehaviour
         }
         else if (collision.collider.tag == "Player")
         {
-            mounted = true;
-        }
-        else
-        {
-            mounted = false;
+            collisionCount++;
         }
     }
 
-    //private void OnCollisionExit(Collision collision)
-    //{
-    //    if (collision.collider.tag == "Player")
-    //    {
-    //        mounted = true;
-    //    }
-    //}
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.collider.tag == "Player")
+        {
+            collisionCount--;
+        }
+    }
 
     // Update is called once per frame
     void Update()
@@ -55,7 +51,7 @@ public class Platform : MonoBehaviour
         if (Move && !pause)
         {
             transform.position += move * speed * Time.deltaTime;
-            if (mounted)
+            if (collisionCount > 0)
             {
                 player.transform.position += move * speed * Time.deltaTime;
             }
@@ -71,6 +67,6 @@ public class Platform : MonoBehaviour
                 Move = true;
             }
         }
-        
+
     }
 }
