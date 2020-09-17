@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -6,7 +8,8 @@ public class Player : MonoBehaviour
     public float speed = 1000f;
     public float speedEnd = 10f;
     public Rigidbody rb;
-    public GameObject endMoveTo;
+    public Image fader;
+    private GameObject endMoveTo;
     bool end = false;
     public int collisionCount = 0;
 
@@ -22,7 +25,7 @@ public class Player : MonoBehaviour
     {
         if (other.gameObject.tag == "EndMoveTo")
         {
-            Debug.Log("HIT");
+            endMoveTo = other.gameObject;
             end = true;
         }
     }
@@ -38,7 +41,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        fader.CrossFadeAlpha(0, 2, false);
     }
 
     // Update is called once per frame
@@ -46,13 +49,15 @@ public class Player : MonoBehaviour
     {
         if (end)
         {
+            fader.CrossFadeAlpha(1, 0.5f, false);
+
             float step = speedEnd * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, endMoveTo.transform.position, step);
+
+            Invoke("NextLevel", 2);
         }
         else
         {
-
-
             Vector3 force = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
             rb.AddForce(force * Time.deltaTime * speed, ForceMode.Force);
 
@@ -61,5 +66,10 @@ public class Player : MonoBehaviour
                 rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             }
         }
+    }
+
+    void NextLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
