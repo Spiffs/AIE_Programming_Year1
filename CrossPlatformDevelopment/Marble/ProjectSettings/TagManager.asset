@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Level
   - EndMoveTo
+  - Button
   layers:
   - Default
   - TransparentFX
