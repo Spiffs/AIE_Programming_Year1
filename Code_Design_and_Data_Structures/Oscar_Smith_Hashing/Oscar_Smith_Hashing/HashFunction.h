@@ -99,6 +99,7 @@ public:
 	{
 		for (int i = 0; i < tablelength; i++)
 		{
+			cout << i + 1 << ". ";
 			if (m_table[i].m_data != "") {
 				cout << m_table[i].m_data << " :  ";
 				cout << m_table[i].m_value << endl;
@@ -108,6 +109,18 @@ public:
 				cout << endl;
 			}
 		}
+	}
+
+	bool Exists(TData a_data)
+	{
+		for (int i = IntHashFunction(a_data); i < tablelength; i++)
+		{
+			if (m_table[i].m_data == a_data)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 protected:

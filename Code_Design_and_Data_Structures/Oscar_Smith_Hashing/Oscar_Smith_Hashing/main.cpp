@@ -11,13 +11,19 @@ int main()
 	table.AddEntry("Aaron", 14454);
 	table.AddEntry("Oscar", 222222);	// update test
 
-
 	std::cout << table.GetValue("Oscar") << std::endl;
 	std::cout << table.GetValue("Petgr") << std::endl;
-	std::cout << table.GetValue("something") << std::endl;
+	if (table.Exists("something"))
+	{
+		std::cout << table.GetValue("something") << std::endl;
+	}
+	else { std::cout << "Does Not Exist" << std::endl; }
 
+	std::cout << std::endl;
 
 	table.Print();
+
+	std::cin.get();
 
 	return 0;
 }

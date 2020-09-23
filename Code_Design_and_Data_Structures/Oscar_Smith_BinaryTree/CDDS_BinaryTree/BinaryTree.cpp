@@ -32,47 +32,6 @@ bool BinaryTree::IsEmpty() const
 
 // Insert a new element into the tree.
 // Smaller elements are placed to the left, larger onces are placed to the right.
-void BinaryTree::Insert(int a_nValue)
-{
-	// check if the new node must be set as 
-	if (IsEmpty() == true)
-	{
-		m_pRoot = new TreeNode(a_nValue);
-	}
-	else
-	{
-		// temp nodes
-		TreeNode* pParent = nullptr;
-		TreeNode* pCurrent = nullptr;
-
-		bool exists = false;
-		pCurrent = m_pRoot;
-
-		while (pCurrent != NULL && !exists)
-		{
-			pParent = pCurrent;
-
-			if (a_nValue < pCurrent->GetData())
-				pCurrent = pCurrent->GetLeft();
-
-			else if (a_nValue > pCurrent->GetData())
-				pCurrent = pCurrent->GetRight();
-
-			else if (a_nValue == pCurrent->GetData())
-				exists = true;
-		}
-
-		TreeNode* pAddition = new TreeNode(a_nValue);
-
-		if (!exists)
-		{
-			if (pAddition->GetData() < pParent->GetData())
-				pParent->SetLeft(pAddition);
-			else
-				pParent->SetRight(pAddition);
-		}
-	}
-}
 
 void BinaryTree::Insert(TreeNode* a_nValue)
 {
@@ -101,6 +60,48 @@ void BinaryTree::Insert(TreeNode* a_nValue)
 				pCurrent = pCurrent->GetRight();
 
 			else if (a_nValue->GetData() == pCurrent->GetData())
+				exists = true;
+		}
+
+		TreeNode* pAddition = a_nValue;
+
+		if (!exists)
+		{
+			if (pAddition->GetData() < pParent->GetData())
+				pParent->SetLeft(pAddition);
+			else
+				pParent->SetRight(pAddition);
+		}
+	}
+}
+
+void BinaryTree::Insert(int a_nValue)
+{
+	// check if the new node must be set as 
+	if (IsEmpty() == true)
+	{
+		m_pRoot = new TreeNode(a_nValue);
+	}
+	else
+	{
+		// temp nodes
+		TreeNode* pParent = nullptr;
+		TreeNode* pCurrent = nullptr;
+
+		bool exists = false;
+		pCurrent = m_pRoot;
+
+		while (pCurrent != NULL && !exists)
+		{
+			pParent = pCurrent;
+
+			if (a_nValue < pCurrent->GetData())
+				pCurrent = pCurrent->GetLeft();
+
+			else if (a_nValue > pCurrent->GetData())
+				pCurrent = pCurrent->GetRight();
+
+			else if (a_nValue == pCurrent->GetData())
 				exists = true;
 		}
 
@@ -179,10 +180,10 @@ void BinaryTree::Remove(int a_nValue)
 
 		// insert the left and right back into the equation 
 		if (pRight != nullptr)
-			Insert(pRight->GetData());
+			Insert(pRight);
 
 		if (pLeft != nullptr)
-			Insert(pLeft->GetData());
+			Insert(pLeft);
 
 
 	}
