@@ -14,7 +14,6 @@ protected:
 	int m_usedlength = 0;
 	LinkedListObject* m_list;
 
-
 public:
 	LinkedList();
 
@@ -54,7 +53,9 @@ public:
 
 	int Search(int a_value);
 
+	void Sort();
 
+	void Swap(int _posa, int _posb);
 };
 
 class LinkedListObject

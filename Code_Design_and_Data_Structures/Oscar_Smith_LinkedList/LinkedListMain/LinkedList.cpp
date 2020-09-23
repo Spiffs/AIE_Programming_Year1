@@ -68,23 +68,23 @@ void LinkedList::PushBack(int a_value)
 void LinkedList::Insert(int a_location, int a_value)
 {
 	// moving list values up to counter for the new value
-	for (int i = m_usedlength; i > a_location - 1; i++)
+	for (int i = m_usedlength; i > a_location - 1; i--)
 	{
 		m_list[i] = m_list[i - 1];
 	}
 
 	// creating newvalue 
-	int a_previous = m_list[a_location - 1].GetData();
+	int a_previous = m_list[a_location - 2].GetData();
 	int a_data = a_value;
-	int a_next = m_list[a_location + 1].GetData();
+	int a_next = m_list[a_location].GetData();
 
 	LinkedListObject newobj(a_previous, a_data, a_next);
-	m_list[a_location] = newobj;
+	m_list[a_location - 1] = newobj;
 	m_usedlength++;
 
 	// fixing surrounding values
-	m_list[a_location - 1].SetNext(a_value);
-	m_list[a_location + 1].SetPrevious(a_value);
+	m_list[a_location - 2].SetNext(a_value);
+	m_list[a_location].SetPrevious(a_value);
 
 	CheckLength();
 }
@@ -154,7 +154,7 @@ void LinkedList::Remove(int a_value)
 void LinkedList::Erase(int a_location)
 {
 	// cycling through editing positions of list values to counter for the removed value
-	for (int i = a_location; i < m_usedlength; i++)
+	for (int i = a_location - 1; i < m_usedlength; i++)
 	{
 		m_list[i] = m_list[i + 1];
 	}
@@ -162,8 +162,8 @@ void LinkedList::Erase(int a_location)
 	//m_list[m_usedlength].Delete();																								HAXXOR
 
 	// fixing surrounding values
-	m_list[a_location - 1].SetNext(m_list[a_location].GetData());
-	m_list[a_location].SetPrevious(m_list[a_location - 1].GetData());
+	m_list[a_location - 2].SetNext(m_list[a_location - 1].GetData());
+	m_list[a_location - 1].SetPrevious(m_list[a_location - 2].GetData());
 
 	// checking for length fixes
 	CheckLength();
@@ -171,25 +171,6 @@ void LinkedList::Erase(int a_location)
 
 // returns the first value of the list returns -1 on fail
 int LinkedList::First()
-{
-	int r_value = m_list[0].GetData();
-
-	if (r_value == NULL)
-	{
-		return -1;
-	}
-	else
-		return r_value;
-}
-
-// returns the last value of the list
-int LinkedList::Last()
-{
-		return m_list[m_usedlength - 1].GetData();
-}
-
-// returns the pacement of the first value of the list returns -1 on fail
-int LinkedList::Begin()
 {
 	if (m_list[0].GetData() == NULL)
 	{
@@ -199,10 +180,29 @@ int LinkedList::Begin()
 		return m_list[0].GetData();
 }
 
+// returns the last value of the list returns -1 on fail
+int LinkedList::Last()
+{
+	if (m_list[m_usedlength - 1].GetData() == NULL)
+	{
+		return -1;
+	}
+	else
+	{
+		return m_list[m_usedlength - 1].GetData();
+	}
+}
+
+// returns the pacement of the first value of the list returns -1 on fail
+int LinkedList::Begin()
+{
+	return 0;
+}
+
 // returns the position of the last value in the list
 int LinkedList::End()
 {
-	return m_list[m_usedlength - 1].GetData();
+	return m_usedlength - 1;
 }
 
 // returns bool testing if the list is empty or not
@@ -266,8 +266,31 @@ int LinkedList::Search(int a_value)
 	for (int i = 0; i < m_usedlength; i++)
 	{
 		if (a_value == m_list[i].GetData())
-			return i;
+			return i + 1;
 	}
 	// returns -1 on fail
 	return -1;
+}
+
+void LinkedList::Sort()
+{
+	int n = Count();
+	int i, j;
+	for (i = 0; i < n - 1; i++)
+	{
+		// Last i elements are already in place  
+		for (j = 0; j < n - i - 1; j++)
+		{
+			if (m_list[j].GetData() > m_list[j + 1].GetData())
+				Swap(j, j + 1);
+		}
+	}
+}
+
+void LinkedList::Swap(int _posa, int _posb)
+{
+	LinkedListObject temp = m_list[_posa];
+	m_list[_posa] = m_list[_posb];
+	m_list[_posb] = temp;
+
 }
