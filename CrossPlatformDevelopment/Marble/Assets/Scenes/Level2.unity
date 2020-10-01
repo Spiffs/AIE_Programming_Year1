@@ -3232,7 +3232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 0.6
-  fader: {fileID: 1020986395}
+  fader: {fileID: 408454400}
   pauseMenu: {fileID: 601217519}
 --- !u!4 &1479952427
 Transform:
