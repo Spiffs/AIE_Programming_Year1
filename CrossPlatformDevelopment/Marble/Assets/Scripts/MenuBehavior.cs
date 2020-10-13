@@ -125,7 +125,6 @@ public class MenuBehavior : MonoBehaviour
                 break;
         }
 
-        Debug.Log(buttonSelected);
         RenderSettings.skybox.SetFloat("_Rotation", Time.time * rotateSpeed);
     }
 

@@ -7,10 +7,12 @@ public class Player : MonoBehaviour
     public float jumpForce = 2f;
     public float speed = 1000f;
     public float speedEnd = 10f;
+    public bool isFlat = true;
     public Rigidbody rb;
     public Image fader;
     private GameObject endMoveTo;
     bool end = false;
+    bool lvl4end = false;
     public int collisionCount = 0;
 
     private void OnCollisionEnter(Collision collision)
@@ -21,6 +23,14 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.collider.tag != "Wall")
+        {
+            collisionCount--;
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "EndMoveTo")
@@ -28,13 +38,11 @@ public class Player : MonoBehaviour
             endMoveTo = other.gameObject;
             end = true;
         }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.collider.tag != "Wall")
+        else if (other.gameObject.tag == "End")
         {
-            collisionCount--;
+            lvl4end = true;
+            endMoveTo = other.gameObject;
+            end = true;
         }
     }
 
@@ -47,7 +55,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (end)
+        if (end && !lvl4end)
         {
             fader.CrossFadeAlpha(1, 0.5f, false);
 
@@ -55,6 +63,15 @@ public class Player : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, endMoveTo.transform.position, step);
 
             Invoke("NextLevel", 2);
+        }
+        else if (end && lvl4end)
+        {
+            fader.CrossFadeAlpha(1, 0.5f, false);
+
+            float step = speedEnd * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, endMoveTo.transform.position, step);
+
+            Invoke("Completed", 2);
         }
         else
         {
@@ -66,10 +83,20 @@ public class Player : MonoBehaviour
                 rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             }
         }
+
+        #region PHONE CONTROLS
+
+        #endregion
+
     }
 
     void NextLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    void Completed()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }
