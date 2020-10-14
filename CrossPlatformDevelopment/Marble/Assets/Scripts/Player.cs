@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     bool end = false;
     bool lvl4end = false;
     public int collisionCount = 0;
+    bool KorC = false;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -55,6 +56,19 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        #region KEYBOARD OR CONTROLLER
+
+        if (Input.GetJoystickNames().Length > 0)
+        {
+            KorC = true;
+        }
+        if (Input.anyKey)
+        {
+            KorC = false;
+        }
+
+        #endregion
+
         if (end && !lvl4end)
         {
             fader.CrossFadeAlpha(1, 0.5f, false);
@@ -75,13 +89,17 @@ public class Player : MonoBehaviour
         }
         else
         {
+            float newspeed = speed;
+            if (KorC == true) { newspeed = newspeed * 1.35f; };
+
             Vector3 force = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
-            rb.AddForce(force * Time.deltaTime * speed, ForceMode.Force);
+            rb.AddForce(force * Time.deltaTime * newspeed, ForceMode.Force);
 
             if (Input.GetButtonDown("Jump") && collisionCount > 0)
             {
                 rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             }
+            newspeed = speed;
         }
 
         #region PHONE CONTROLS

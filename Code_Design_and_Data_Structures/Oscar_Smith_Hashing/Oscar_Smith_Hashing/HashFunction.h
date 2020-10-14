@@ -128,4 +128,3 @@ protected:
 	Entry* m_table = nullptr;
 
 };
-

@@ -47,13 +47,6 @@ public class Platform : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        move = new Vector3(1 * mod, 0, 1 * -mod);
-        if (Move && !pause)
-        {
-            transform.position += move * speed * Time.deltaTime;
-            
-        }
-
         if (pause)
         {
             timer -= Time.deltaTime;
@@ -65,9 +58,15 @@ public class Platform : MonoBehaviour
             }
         }
 
-    }    
+    }
     void FixedUpdate()
     {
+        move = new Vector3(1 * mod, 0, 1 * -mod);
+        if (Move && !pause)
+        {
+            transform.position += move * speed * Time.deltaTime;
+
+        }
         if (Move && !pause)
         {
             if (collisionCount > 0)

@@ -2,6 +2,14 @@
 #include <string>
 #include <iostream>
 
+void Exists(const std::string& a_exists, HashFunction<std::string, int>& a_table)
+{
+	if (a_table.Exists(a_exists)) {
+		std::cout << a_table.GetValue(a_exists) << std::endl;
+	}
+	else { std::cout << "Does Not Exist" << std::endl; }
+}
+
 int main()
 {
 	HashFunction<std::string, int> table;
@@ -11,13 +19,9 @@ int main()
 	table.AddEntry("Aaron", 14454);
 	table.AddEntry("Oscar", 222222);	// update test
 
-	std::cout << table.GetValue("Oscar") << std::endl;
-	std::cout << table.GetValue("Petgr") << std::endl;
-	if (table.Exists("something"))
-	{
-		std::cout << table.GetValue("something") << std::endl;
-	}
-	else { std::cout << "Does Not Exist" << std::endl; }
+	Exists("Oscar", table);
+	Exists("Petgr", table);
+	Exists("something", table);
 
 	std::cout << std::endl;
 

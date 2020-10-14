@@ -81,13 +81,13 @@ public class PauseBehavior : MonoBehaviour
         }
         #endregion
 
-        if (Input.GetKeyDown(KeyCode.Escape) && !pause)
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("Pause") && !pause)
         {
             pause = true;
             Time.timeScale = 0;
             pauseMenu.enabled = true;
         }
-        else if (Input.GetKeyDown(KeyCode.Escape) && pause) { pause = false; Time.timeScale = 1; pauseMenu.enabled = false; }
+        else if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("Pause") && pause) { pause = false; Time.timeScale = 1; pauseMenu.enabled = false; }
     }
 
     void SelectButton()
