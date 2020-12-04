@@ -150,6 +150,9 @@
   <ItemGroup>
     <ClCompile Include="Letters_Shared_Between_Two_Words.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\ScrabbleExercise\Raylib\Bindings\Raylib.shproj" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

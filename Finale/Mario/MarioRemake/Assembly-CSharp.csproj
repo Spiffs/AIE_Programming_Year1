@@ -63,7 +63,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\BoxScript.cs" />
     <Compile Include="Assets\Scripts\CamerMovement.cs" />
+    <Compile Include="Assets\Scripts\Mushroom.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/s192134/Desktop/Programming_Year1/Finale/Mario/MarioRemake/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>

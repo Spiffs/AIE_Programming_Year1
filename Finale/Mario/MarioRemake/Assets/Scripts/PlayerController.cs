@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     public Animator mainAnim;
     public Rigidbody2D rb;
     public Transform feetPos;
+    public Collider2D BigCollider;
+    public Collider2D SmallCollider;
     public LayerMask whatIsGround;
 
     //public commons
@@ -23,11 +25,12 @@ public class PlayerController : MonoBehaviour
     private bool isJumping = false;
     private bool jump = false;
     private bool alive = true;
+    public bool bigboi = false;
     private float jumpTimerCounter = 0f;
     private float horizontalMove = 0f;
     private float sprintAddition = 1f;
     private float collisions = 0f;
-    
+
     #endregion
 
     private void Update()
@@ -45,6 +48,17 @@ public class PlayerController : MonoBehaviour
             scaleflip.x = transform.localScale.x * -1;
         }
         transform.localScale = scaleflip;
+
+        if (bigboi)
+        {
+            BigCollider.enabled = true;
+            SmallCollider.enabled = false;
+        }
+        else
+        {
+            BigCollider.enabled = false;
+            SmallCollider.enabled = true;
+        }
 
         #endregion
 
@@ -72,6 +86,16 @@ public class PlayerController : MonoBehaviour
         else
         {
             sprintAddition = 1f;
+        }
+
+        #endregion
+
+        #region GAMEOVER
+
+        if (alive == false)
+        {
+            rb.gameObject.SetActive(false);
+
         }
 
         #endregion
@@ -137,6 +161,39 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    IEnumerator SmallOrBigBoi(bool smallorbig)
+    {
+        yield return new WaitForSecondsRealtime(0.05f);
+        Time.timeScale = 0f;
+        mainAnim.SetFloat("JumpValue", 0);
+        mainAnim.SetFloat("Speed", 0);
+
+        int i = 0;
+        if (smallorbig)
+        {
+            while (i < 3)
+            {
+                mainAnim.SetBool("BigBoi", false);
+                yield return new WaitForSecondsRealtime(0.1f);
+                mainAnim.SetBool("BigBoi", true);
+                yield return new WaitForSecondsRealtime(0.1f);
+                i++;
+            }
+        }
+        else
+        {
+            while (i < 3)
+            {
+                mainAnim.SetBool("BigBoi", true);
+                yield return new WaitForSecondsRealtime(0.1f);
+                mainAnim.SetBool("BigBoi", false);
+                yield return new WaitForSecondsRealtime(0.1f);
+                i++;
+            }
+        }
+        Time.timeScale = 1f;
+    }
+
     #region COLLISIONS
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -145,6 +202,22 @@ public class PlayerController : MonoBehaviour
         if (collision.transform.tag == "DeathCollider")
         {
             alive = false;
+            bigboi = false;
+        }
+        if (collision.transform.tag == "ItemBox")
+        {
+            isJumping = false;
+        }
+        if (collision.transform.tag == "Mushroom")
+        {
+            if (!bigboi)
+            {
+                StartCoroutine(SmallOrBigBoi(true));
+            }
+            else
+            {
+
+            }
         }
     }
 
